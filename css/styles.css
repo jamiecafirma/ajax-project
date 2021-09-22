@@ -36,10 +36,6 @@ a {
   text-decoration: none;
 }
 
-p {
-  line-height: 1.5;
-}
-
 .hidden {
   display: none;
 }
@@ -119,4 +115,91 @@ p {
 
 .close-button {
   font-size: 24px;
+}
+
+.poster {
+  padding: 2rem 2rem 0;
+}
+
+.film-info-pd {
+  padding: 3rem 2rem 1rem;
+}
+
+.pt-3rem {
+  padding-top: 3rem;
+}
+
+.font-size-14 {
+  font-size: 14px;
+}
+
+.film-info-header {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: white;
+  font-size: 28px;
+}
+
+.letter-spacing-1px {
+  letter-spacing: 1px;
+}
+
+.divider-dot {
+  background-color: #505c6b;
+  height: 4px;
+  width: 4px;
+  border-radius: 50%;
+  margin: auto 8px;
+}
+
+.director {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.line-height-one-and-half {
+  line-height: 1.5;
+}
+
+.line-height-two {
+  line-height: 2;
+}
+
+.imdb-link {
+  border-radius: 2px;
+  border: solid 2px #505c6b;
+  background-color: #171b1f;
+  color: #b8cadb;
+  margin: 1rem 0.5rem 0 0;
+  padding: 10px 12px 0;
+}
+
+.runtime {
+  padding: 14px 0;
+  margin-bottom: 0;
+}
+
+.add-entry-btn {
+  width: 52px;
+  height: 52px;
+  background-color: #00e053;
+  border-radius: 50%;
+  font-size: 24px;
+  margin: 1rem;
+}
+
+.white-plus {
+  color: white;
+}
+
+.cast-writer-style-white {
+  color: white;
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+
+.cast-writer-style-blue {
+  color: #3fbcf4;
+  font-size: 12px;
 }

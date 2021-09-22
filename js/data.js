@@ -5,5 +5,7 @@ var data = {
     open: false,
     current: 'imdb'
   },
+  view: 'search-film',
+  lastSearch: {},
   entries: []
 };

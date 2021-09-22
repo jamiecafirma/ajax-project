@@ -32,35 +32,39 @@
         <div class="column-full pop-up">
           <div class="row">
             <div class="column-full">
-              <p>Some films won’t show up in the search if their original titles aren’t used.
+              <p class="line-height-one-and-half">Some films won’t show up in the search if their original titles aren’t used.
               </p>
             </div>
             <div class="column-full justify-center">
-              <img src="images/imdb-title-example.png">
+              <img src="images/imdb-title-example.png" class="modal-image">
             </div>
             <div class="column-full">
-              <p>The IMDb ID can be found in the URL of a film’s IMDb page and then can
+              <p class="line-height-one-and-half">The IMDb ID can be found in the URL of a film’s IMDb page and then can
               be used for a more specific search.
               </p>
             </div>
             <div class="column-full justify-center">
-              <img src="images/imdb-id-example.png">
+              <img src="images/imdb-id-example.png" class="modal-image">
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <div class="view hidden" data-view="search-result" id="search-result-view">
+  </div>
   <header>
-      <div class="row height-80 justify-center align-flex-end light-grey-border" data-view="search-films">
+    <div class="view" data-view="search-films" id="search-films-header-view">
+      <div class="row height-80 justify-center align-flex-end light-grey-border">
         <div class="column-full">
           <h3 class="text-center">Search</h3>
         </div>
       </div>
+    </div>
   </header>
   <main>
     <div class="container">
-      <div data-view="search-films">
+      <div class="view" data-view="search-films" id="search-films-view">
         <div class="grey-bg light-grey-border padding-one-and-half-rem">
           <form class="row flex-wrap" id="search-movie-title">
             <div class="column-full">
@@ -91,7 +95,7 @@
               </button>
             </div>
             <div class="column-full">
-              <p>Search for a film by title, and by year if you want to be more specific.</p>
+              <p class="line-height-one-and-half">Search for a film by title, and by year if you want to be more specific.</p>
             </div>
           </form>
         </div>
@@ -107,7 +111,7 @@
               <label>
                 ID:
                 <input required
-                name="imdb-id"
+                name="imdbID"
                 id="search-imdb-id"
                 type="text"
                 placeholder="IMDb ID">
@@ -117,7 +121,7 @@
               </button>
             </div>
             <div class="column-full">
-              <p>Can’t find the film you’re looking for? Try searching by IMDb ID, especially
+              <p class="line-height-one-and-half">Can’t find the film you’re looking for? Try searching by IMDb ID, especially
               if the film’s original language isn’t English.</p>
             </div>
           </form>

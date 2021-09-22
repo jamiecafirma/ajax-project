@@ -8,7 +8,8 @@
   flex-wrap: wrap;
 }
 
-.column-full {
+.column-full,
+.column-half {
   width: 100%;
 }
 
@@ -20,6 +21,10 @@
   width: calc(100% / 3);
 }
 
+.mobile-width-half {
+  width: 50%;
+}
+
 .pop-up {
   width: 320px;
   height: 450px;
@@ -27,6 +32,10 @@
   padding: 1rem 1.5rem;
   background-color: #303b49;
   border-radius: 10px;
+}
+
+.modal-image {
+  max-width: 300px;
 }
 
 img {
@@ -38,11 +47,11 @@ img {
     max-width: 900px;
   }
 
-  .pop-up {
-    width: 560px;
+  .column-half {
+    width: 50%;
   }
 
-  img {
-    max-width: 300px;
+  .pop-up {
+    width: 560px;
   }
 }
