@@ -4,15 +4,91 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AJAX Project</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="icon" href="images/favicon.ico">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header>
+      <div class="row height-80 justify-center align-flex-end light-grey-border" data-view="search-films">
+        <div class="column-full">
+          <h3 class="text-center">Search</h3>
+        </div>
+      </div>
   </header>
   <main>
+    <div class="container">
+      <div data-view="search-films">
+        <div class="grey-bg light-grey-border padding-one-rem">
+          <form class="row flex-wrap" id="search-movie-title">
+            <div class="column-full">
+              <h3>By Title</h3>
+            </div>
+            <div class="column-full">
+              <label>
+                Title:
+                <input
+                required
+                class="width-40"
+                name="title"
+                id="search-title"
+                type="text"
+                placeholder="Movie Title">
+              </label>
+              <label>
+                Year:
+                <input
+                class="width-fifth"
+                name="year"
+                id="search-year"
+                type="text"
+                placeholder="Year">
+              </label>
+              <button type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+            <div class="column-full">
+              <p>Search for a film by title, and by year if you want to be more specific.</p>
+            </div>
+          </form>
+        </div>
+        <div class="grey-bg padding-one-rem">
+          <form id="search-id">
+            <div class="row align-center">
+              <h3>By IMDb ID</h3>
+              <a href="#" class="question-mark">
+                <i class="fas fa-question"></i>
+              </a>
+            </div>
+            <div class="column-full">
+              <label>
+                ID:
+                <input required
+                name="imdb-id"
+                id="search-imdb-id"
+                type="text"
+                placeholder="IMDb ID">
+              </label>
+              <button type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+            <div class="column-full">
+              <p>Can’t find the film you’re looking for? Try searching by IMDb ID, especially
+              if the film’s original language isn’t English.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>

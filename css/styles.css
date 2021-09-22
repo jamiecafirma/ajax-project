@@ -1,0 +1,94 @@
+body {
+  background-color: #171b1f;
+  color: #b8cadb;
+  font-family: 'Roboto', sans-serif;
+}
+
+header {
+  background-color: black;
+}
+
+h3 {
+  color: white;
+  font-size: 18px;
+  margin-bottom: 0.75rem;
+}
+
+input {
+  border-radius: 10px;
+  background-color: #505c6b;
+  color: #b8cadb;
+  padding: 0.75rem;
+  border: none;
+  margin: 4px;
+  height: 2rem;
+  outline: none;
+}
+
+button {
+  background-color: #171b1f;
+  color: white;
+  border: none;
+  font-size: 16px;
+}
+
+a {
+  text-decoration: none;
+  color: #b8cadb;
+}
+
+p {
+  line-height: 1.5;
+}
+
+::placeholder {
+  color: #b8cadb;
+}
+
+.height-80 {
+  height: 80px;
+}
+
+.width-40 {
+  width: 40%;
+}
+
+.width-fifth {
+  width: 20%;
+}
+
+.light-grey-border {
+  border-bottom: solid #505c6b 1px;
+}
+
+.grey-bg {
+  background-color: #171b1f;
+}
+
+.padding-one-rem {
+  padding: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.align-center {
+  display: flex;
+  align-items: center;
+}
+
+.align-flex-end {
+  display: flex;
+  align-items: flex-end;
+}
+
+.justify-center {
+  display: flex;
+  justify-content: center;
+}
+
+.question-mark {
+  padding-top: 4px;
+  margin-left: 8px;
+}
