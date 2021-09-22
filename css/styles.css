@@ -34,11 +34,30 @@ button {
 
 a {
   text-decoration: none;
-  color: #b8cadb;
 }
 
 p {
   line-height: 1.5;
+}
+
+.hidden {
+  display: none;
+}
+
+.black-bg {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  padding-top: 180px;
+}
+
+.light-blue-text {
+  color: #b8cadb;
+}
+
+.white-text {
+  color: white;
 }
 
 ::placeholder {
@@ -65,8 +84,8 @@ p {
   background-color: #171b1f;
 }
 
-.padding-one-rem {
-  padding: 1rem;
+.padding-one-and-half-rem {
+  padding: 1rem 1.5rem;
 }
 
 .text-center {
@@ -88,7 +107,16 @@ p {
   justify-content: center;
 }
 
+.justify-flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .question-mark {
   padding-top: 4px;
   margin-left: 8px;
+}
+
+.close-button {
+  font-size: 24px;
 }

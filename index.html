@@ -16,6 +16,41 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <div class="modal hidden" id="imdb-modal" data-modal="imdb">
+    <div class="black-bg">
+      <div class="row justify-center">
+        <div class="column-two-thirds justify-center">
+          <h2>What's an IMDb ID?</h2>
+        </div>
+        <div class="column-one-third align-center">
+          <a href="#" class="white-text close-button" id="close-imdb" data-modal="imdb">
+            <i class="fas fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column-full pop-up">
+          <div class="row">
+            <div class="column-full">
+              <p>Some films won’t show up in the search if their original titles aren’t used.
+              </p>
+            </div>
+            <div class="column-full justify-center">
+              <img src="images/imdb-title-example.png">
+            </div>
+            <div class="column-full">
+              <p>The IMDb ID can be found in the URL of a film’s IMDb page and then can
+              be used for a more specific search.
+              </p>
+            </div>
+            <div class="column-full justify-center">
+              <img src="images/imdb-id-example.png">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <header>
       <div class="row height-80 justify-center align-flex-end light-grey-border" data-view="search-films">
         <div class="column-full">
@@ -26,7 +61,7 @@
   <main>
     <div class="container">
       <div data-view="search-films">
-        <div class="grey-bg light-grey-border padding-one-rem">
+        <div class="grey-bg light-grey-border padding-one-and-half-rem">
           <form class="row flex-wrap" id="search-movie-title">
             <div class="column-full">
               <h3>By Title</h3>
@@ -60,11 +95,11 @@
             </div>
           </form>
         </div>
-        <div class="grey-bg padding-one-rem">
+        <div class="grey-bg padding-one-and-half-rem">
           <form id="search-id">
             <div class="row align-center">
               <h3>By IMDb ID</h3>
-              <a href="#" class="question-mark">
+              <a href="#" class="question-mark light-blue-text" id="open-imdb" data-modal="imdb">
                 <i class="fas fa-question"></i>
               </a>
             </div>
