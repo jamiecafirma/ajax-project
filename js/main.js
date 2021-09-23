@@ -41,6 +41,24 @@ function changeView(targetView) {
   }
 }
 
+function createSearchResult(response) {
+  var output = {};
+
+  output.title = response.Title;
+  output.year = response.Year;
+  output.director = response.Director;
+  output.writer = response.Writer;
+  output.cast = response.Actors;
+  output.plot = response.Plot;
+  output.imdbID = response.imdbID;
+  output.poster = response.Poster;
+  output.runtime = response.Runtime;
+
+  renderSearchResult(output);
+  changeView('search-result');
+  return output;
+}
+
 /* <div class="view" data-view="search-result" id="search-result-view">
   <div class="row container">
     <div class="column-half poster">
@@ -234,7 +252,6 @@ function searchTitle(event) {
   var xhr = new XMLHttpRequest();
   var searchTitle = $titleForm.title.value;
   var searchYear = $titleForm.year.value;
-  var movieEntry = {};
 
   if (searchYear !== '') {
     xhr.open('GET', 'http://www.omdbapi.com/?t=' + searchTitle + '&' + 'y=' + searchYear + '&' + 'plot=full' + '&' + apikey);
@@ -243,21 +260,11 @@ function searchTitle(event) {
   }
   xhr.responseType = 'json';
 
-  function createSearchResult(event) {
-    movieEntry.title = xhr.response.Title;
-    movieEntry.year = xhr.response.Year;
-    movieEntry.director = xhr.response.Director;
-    movieEntry.writer = xhr.response.Writer;
-    movieEntry.cast = xhr.response.Actors;
-    movieEntry.plot = xhr.response.Plot;
-    movieEntry.imdbID = xhr.response.imdbID;
-    movieEntry.poster = xhr.response.Poster;
-    movieEntry.runtime = xhr.response.Runtime;
-
-    renderSearchResult(movieEntry);
-    changeView('search-result');
+  function returnTitleSearch(event) {
+    createSearchResult(xhr.response);
   }
-  xhr.addEventListener('load', createSearchResult);
+
+  xhr.addEventListener('load', returnTitleSearch);
   xhr.send();
 }
 
@@ -267,26 +274,15 @@ function searchID(event) {
   event.preventDefault();
   var xhr = new XMLHttpRequest();
   var searchID = $idForm.imdbID.value;
-  var movieEntry = {};
 
   xhr.open('GET', 'http://www.omdbapi.com/?i=' + searchID + '&' + apikey);
   xhr.responseType = 'json';
 
-  function createSearchResult(event) {
-    movieEntry.title = xhr.response.Title;
-    movieEntry.year = xhr.response.Year;
-    movieEntry.director = xhr.response.Director;
-    movieEntry.writer = xhr.response.Writer;
-    movieEntry.cast = xhr.response.Actors;
-    movieEntry.plot = xhr.response.Plot;
-    movieEntry.imdbID = xhr.response.imdbID;
-    movieEntry.poster = xhr.response.Poster;
-    movieEntry.runtime = xhr.response.Runtime;
-
-    renderSearchResult(movieEntry);
-    changeView('search-result');
+  function returnIdSearch(event) {
+    createSearchResult(xhr.response);
   }
-  xhr.addEventListener('load', createSearchResult);
+
+  xhr.addEventListener('load', returnIdSearch);
   xhr.send();
 }
 
