@@ -36,6 +36,18 @@ a {
   text-decoration: none;
 }
 
+.dark-grey-border {
+  border-bottom: solid #1b232c 0.1px;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  margin-left: 1rem;
+}
+
+.remove-margin-left {
+  margin-left: 0;
+}
+
 .hidden {
   display: none;
 }
@@ -52,8 +64,16 @@ a {
   color: #b8cadb;
 }
 
+.grey-text {
+  color: #91a2b3;
+}
+
 .white-text {
   color: white;
+}
+
+.green-text {
+  color: #00e053;
 }
 
 ::placeholder {
@@ -80,12 +100,32 @@ a {
   background-color: #171b1f;
 }
 
+.padding-sides-one-rem {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.padding-tb-50-rem {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.padding-tb-75-rem {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
 .padding-one-and-half-rem {
   padding: 1rem 1.5rem;
 }
 
 .text-center {
   text-align: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
 }
 
 .align-center {
@@ -101,6 +141,11 @@ a {
 .justify-center {
   display: flex;
   justify-content: center;
+}
+
+.justify-space-between {
+  display: flex;
+  justify-content: space-between;
 }
 
 .justify-flex-end {
@@ -129,8 +174,28 @@ a {
   padding-top: 3rem;
 }
 
+.pt-1-5rem {
+  padding-top: 1.5rem;
+}
+
+.mr-4 {
+  margin-right: 4px;
+}
+
 .font-size-14 {
   font-size: 14px;
+}
+
+.font-size-12 {
+  font-size: 12px;
+}
+
+.font-weight-700 {
+  font-weight: 700;
+}
+
+.text-right {
+  text-align: right;
 }
 
 .film-info-header {
@@ -202,4 +267,58 @@ a {
 .cast-writer-style-blue {
   color: #3fbcf4;
   font-size: 12px;
+}
+
+.entry-form-poster {
+  width: 32px;
+  border-radius: 2px;
+  margin-right: 1rem;
+}
+
+.entry-form-dark-grey {
+  background-color: #1b232c;
+}
+
+.entry-form-header {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#entry-date {
+  width: 100%;
+}
+
+.fa-star {
+  color: #282f38;
+  margin-right: 4px;
+}
+
+.rated {
+  color: #00e053;
+}
+
+.stars-container {
+  font-size: 36px;
+  margin-bottom: 18px;
+}
+
+.fa-heart {
+  color: #282f38;
+}
+
+.liked {
+  color: #ff8f0d;
+}
+
+.heart-container {
+  font-size: 36px;
+  margin-bottom: 18px;
+}
+
+.width-37 {
+  width: 37px;
+}
+
+.fa-history {
+  font-size: 40px;
 }

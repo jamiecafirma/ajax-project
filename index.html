@@ -53,8 +53,77 @@
   </div>
   <div class="view hidden" data-view="search-result" id="search-result-view">
   </div>
+  <div class="modal" id="entry-form-modal" data-modal="entry-form">
+    <div class="entry-bg">
+      <form id="movie-entry-form">
+        <div class="row padding-sides-one-rem align-center justify-space-between">
+          <a class="grey-text" href="#">Cancel</a>
+          <p class="white-text font-weight-700 entry-form-header">I Watched...</p>
+          <a class="green-text font-weight-700" href="#">Save</a>
+        </div>
+        <div class="row entry-form-dark-grey padding-sides-one-rem padding-tb-75-rem align-center">
+          <img src="https://m.media-amazon.com/images/M/MV5BOWI2YWQxM2MtY2U4Yi00YjgzLTgwNzktN2ExNTgzNTIzMmUzXkEyXkFqcGdeQXVyMTAwMzUyOTc@._V1_SX300.jpg" alt="movie-poster" class="entry-form-poster">
+          <p class="font-weight-700 mr-4">All the President's Men</p>
+          <p class="font-size-12">1976</p>
+        </div>
+        <div class="row padding-sides-one-rem align-center padding-tb-75-rem">
+          <div class="mobile-width-half">
+            <label for="entry-date">Date</label>
+          </div>
+          <div class="mobile-width-half">
+            <input required
+            type="date"
+            id="entry-date"
+            name="entry-date">
+          </div>
+        </div>
+        <hr class="dark-grey-border">
+        <div class="row padding-sides-one-rem">
+          <div class="mobile-width-two-thirds">
+            <div class="row">
+              <p>Rate</p>
+            </div>
+            <div class="row stars-container">
+              <i class="fas fa-star rated" data-index="1"></i>
+              <i class="fas fa-star" data-index="2"></i>
+              <i class="fas fa-star" data-index="3"></i>
+              <i class="fas fa-star" data-index="4"></i>
+              <i class="fas fa-star" data-index="5"></i>
+            </div>
+          </div>
+          <div class="mobile-width-third flex-column align-flex-end">
+            <div class="row width-37 justify-center">
+              <p class="">Like</p>
+            </div>
+            <div class="row heart-container">
+              <i class="fas fa-heart liked"></i>
+            </div>
+          </div>
+        </div>
+        <hr class="dark-grey-border">
+        <div class="row padding-sides-one-rem">
+          <textarea required
+          type="text"
+          name="review"
+          id="entry-review"
+          class="padding-tb-75-rem"
+          placeholder="">Add review... or anything you want to say, go crazy ;)
+          </textarea>
+        </div>
+        <hr class="dark-grey-border">
+        <div class="row padding-sides-one-rem padding-tb-50-rem">
+          <a href="#" data-modal="tags" id="tags-link" class="grey-text">Add tags...</a>
+        </div>
+        <hr class="dark-grey-border remove-margin-left">
+        <div class="row padding-tb-75-rem flex-column align-center pt-1-5rem">
+          <i class="fas fa-history grey-text"></i>
+          <p class="grey-text font-size-12">I've seen this film before</p>
+        </div>
+      </form>
+    </div>
+  </div>
   <header>
-    <div class="view" data-view="search-films" id="search-films-header-view">
+    <div class="view hidden" data-view="search-films" id="search-films-header-view">
       <div class="row height-80 justify-center align-flex-end light-grey-border">
         <div class="column-full">
           <h3 class="text-center">Search</h3>
@@ -64,7 +133,7 @@
   </header>
   <main>
     <div class="container">
-      <div class="view" data-view="search-films" id="search-films-view">
+      <div class="view hidden" data-view="search-films" id="search-films-view">
         <div class="grey-bg light-grey-border padding-one-and-half-rem">
           <form class="row flex-wrap" id="search-movie-title">
             <div class="column-full">

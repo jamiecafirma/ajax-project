@@ -93,7 +93,7 @@ function createSearchResult(response) {
           </div>
         </div>
         <div class="mobile-width-half justify-flex-end align-center">
-          <div class="add-entry-btn justify-center align-center" data-modal="add-entry">
+          <div class="add-entry-btn justify-center align-center" data-modal="entry-form">
             <a href="#" class="white-plus">+</a>
           </div>
         </div>
@@ -205,7 +205,7 @@ function renderSearchResult(movie) {
 
   var $addEntryButton = document.createElement('div');
   $addEntryButton.className = 'add-entry-btn justify-center align-center';
-  $addEntryButton.setAttribute('data-modal', 'add-entry');
+  $addEntryButton.setAttribute('data-modal', 'entry-form');
   $buttonHalf.appendChild($addEntryButton);
 
   var $plusSign = document.createElement('a');
