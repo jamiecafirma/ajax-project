@@ -6,6 +6,14 @@ var $idForm = document.querySelector('#search-id');
 var apikey = 'apikey=9de878f5';
 var $views = document.querySelectorAll('.view');
 
+// if (data.view === 'search-result') {
+//   debugger;
+//   renderSearchResult(data.lastSearch);
+//   changeView('search-result');
+// } else {
+//   changeView(data.view);
+// }
+
 function toggleModals(targetModal) {
   for (var i = 0; i < $modals.length; i++) {
     if ($modals[i].getAttribute('data-modal') === targetModal) {
@@ -54,6 +62,7 @@ function createSearchResult(response) {
   output.poster = response.Poster;
   output.runtime = response.Runtime;
 
+  data.lastSearch = output;
   renderSearchResult(output);
   changeView('search-result');
   return output;
@@ -262,6 +271,7 @@ function searchTitle(event) {
 
   function returnTitleSearch(event) {
     createSearchResult(xhr.response);
+    $titleForm.reset();
   }
 
   xhr.addEventListener('load', returnTitleSearch);
@@ -280,11 +290,11 @@ function searchID(event) {
 
   function returnIdSearch(event) {
     createSearchResult(xhr.response);
+    $idForm.reset();
   }
 
   xhr.addEventListener('load', returnIdSearch);
   xhr.send();
 }
 
-$titleForm.addEventListener('submit', searchTitle);
 $idForm.addEventListener('submit', searchID);
