@@ -14,6 +14,8 @@ var $views = document.querySelectorAll('.view');
 //   changeView(data.view);
 // }
 
+// data.view = ('search-film');
+
 function toggleModals(targetModal) {
   for (var i = 0; i < $modals.length; i++) {
     if ($modals[i].getAttribute('data-modal') === targetModal) {
@@ -206,6 +208,9 @@ function renderSearchResult(movie) {
   var $addEntryButton = document.createElement('div');
   $addEntryButton.className = 'add-entry-btn justify-center align-center';
   $addEntryButton.setAttribute('data-modal', 'entry-form');
+  $addEntryButton.addEventListener('click', function () {
+    toggleModals('entry-form');
+  });
   $buttonHalf.appendChild($addEntryButton);
 
   var $plusSign = document.createElement('a');
