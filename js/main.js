@@ -12,6 +12,10 @@ var $ratingLabel = document.querySelector('#rating-label');
 var $likedLabel = document.querySelector('#liked-label');
 var $heart = document.querySelector('.fa-heart');
 var $rewatchContainer = document.querySelector('#rewatch-container');
+var $entryFilmPoster = document.querySelector('#entry-film-poster');
+var $entryFilmTitle = document.querySelector('#entry-film-title');
+var $entryFilmYear = document.querySelector('#entry-film-year');
+var $movieEntryForm = document.querySelector('#movie-entry-form');
 
 // if (data.view === 'search-result') {
 //   debugger;
@@ -222,6 +226,7 @@ function renderSearchResult(movie) {
   $addEntryButton.className = 'add-entry-btn justify-center align-center';
   $addEntryButton.setAttribute('data-modal', 'entry-form');
   $addEntryButton.addEventListener('click', function () {
+    addFilmToForm();
     toggleModals('entry-form');
   });
   $buttonHalf.appendChild($addEntryButton);
@@ -317,6 +322,13 @@ function searchID(event) {
 
 $idForm.addEventListener('submit', searchID);
 
+function addFilmToForm() {
+  $entryFilmPoster.setAttribute('src', data.lastSearch.poster);
+  $entryFilmTitle.textContent = data.lastSearch.title;
+  $entryFilmYear.textContent = data.lastSearch.year;
+  data.currentEntry.movie = data.lastSearch;
+}
+
 data.currentEntry.rating = 0;
 function rateMovie(event) {
   if (event.target.tagName !== 'I') {
@@ -377,3 +389,20 @@ function rewatchedMovie(event) {
 }
 
 $rewatchContainer.addEventListener('click', rewatchedMovie);
+
+function saveEntry(event) {
+  event.preventDefault();
+  data.currentEntry.date = $movieEntryForm.elements.date.value;
+  data.currentEntry.review = $movieEntryForm.elements.review.value;
+  data.entries.push(data.currentEntry);
+  toggleModals('entry-form');
+  // $movieEntryForm.reset();
+  // data.currentEntry.rating = 0;
+  // data.currentEntry.liked = false;
+  // data.currentEntry.rewatched = false;
+  // data.currentEntry.review = '';
+  // data.currentEntry.date = '';
+  // data.currentEntry.movie = {};
+}
+
+$movieEntryForm.addEventListener('submit', saveEntry);
