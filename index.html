@@ -16,6 +16,15 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <div class="user-action-banner white-text text-center font-size-12 justify-center align-flex-end">
+    <p><strong id="banner-movie">All the President's Men</strong> was added to your diary</p>
+  </div>
+  <div class="nav-bar align-center justify-center">
+    <a href="#" id="nav-search" data-view="search-films">
+      <i class="fas fa-search nav-item" data-view="search-films"></i>
+    </a>
+    <i class="fas fa-ticket-alt nav-item"></i>
+  </div>
   <div class="modal hidden" id="imdb-modal" data-modal="imdb">
     <div class="black-bg">
       <div class="row justify-center">
@@ -49,6 +58,74 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="modal hidden" id="entry-form-modal" data-modal="entry-form">
+    <div class="entry-bg">
+      <form id="movie-entry-form">
+        <div class="row padding-sides-one-rem align-center justify-space-between">
+          <a class="grey-text" href="#" id="close-entry-form">Cancel</a>
+          <p class="white-text font-weight-700 entry-form-header">I Watched...</p>
+          <button type="submit" class="green-text font-weight-700" id="save-entry">Save</button>
+        </div>
+        <div class="row entry-form-dark-grey padding-sides-one-rem padding-tb-75-rem align-center">
+          <img src="https://m.media-amazon.com/images/M/MV5BOWI2YWQxM2MtY2U4Yi00YjgzLTgwNzktN2ExNTgzNTIzMmUzXkEyXkFqcGdeQXVyMTAwMzUyOTc@._V1_SX300.jpg" alt="movie-poster" class="entry-form-poster" id="entry-film-poster">
+          <p class="font-weight-700 mr-4" id="entry-film-title">All the President's Men</p>
+          <p class="font-size-12" id="entry-film-year">1976</p>
+        </div>
+        <div class="row padding-sides-one-rem align-center padding-tb-75-rem">
+          <div class="mobile-width-half">
+            <label for="entry-date">Date</label>
+          </div>
+          <div class="mobile-width-half">
+            <input required
+            type="date"
+            id="entry-date"
+            name="date">
+          </div>
+        </div>
+        <hr class="dark-grey-border">
+        <div class="row padding-sides-one-rem">
+          <div class="mobile-width-two-thirds">
+            <div class="row">
+              <p id="rating-label">Rate</p>
+            </div>
+            <div class="row stars-container">
+              <i class="fas fa-star" data-index="1"></i>
+              <i class="fas fa-star" data-index="2"></i>
+              <i class="fas fa-star" data-index="3"></i>
+              <i class="fas fa-star" data-index="4"></i>
+              <i class="fas fa-star" data-index="5"></i>
+            </div>
+          </div>
+          <div class="mobile-width-third flex-column align-flex-end">
+            <div class="row width-37 justify-center">
+              <p id="liked-label">Like</p>
+            </div>
+            <div class="row heart-container">
+              <i class="fas fa-heart"></i>
+            </div>
+          </div>
+        </div>
+        <hr class="dark-grey-border">
+        <div class="row padding-sides-one-rem">
+          <textarea
+          type="text"
+          name="review"
+          id="entry-review"
+          class="padding-tb-75-rem"
+          placeholder="Add review... or anything you want to say, go crazy ;)"></textarea>
+        </div>
+        <hr class="dark-grey-border">
+        <div class="row padding-sides-one-rem padding-tb-50-rem">
+          <a href="#" data-modal="tags" id="tags-link" class="grey-text">Add tags...</a>
+        </div>
+        <hr class="dark-grey-border remove-margin-left">
+        <div class="row padding-tb-75-rem flex-column align-center pt-1-5rem grey-text" id="rewatch-container">
+          <i class="fas fa-history"></i>
+          <p class="font-size-12">I've seen this film before</p>
+        </div>
+      </form>
     </div>
   </div>
   <div class="view hidden" data-view="search-result" id="search-result-view">

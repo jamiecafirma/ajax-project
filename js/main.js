@@ -5,6 +5,26 @@ var $titleForm = document.querySelector('#search-movie-title');
 var $idForm = document.querySelector('#search-id');
 var apikey = 'apikey=9de878f5';
 var $views = document.querySelectorAll('.view');
+var $closeEntryForm = document.querySelector('#close-entry-form');
+var $starsContainer = document.querySelector('.stars-container');
+var $stars = document.querySelectorAll('.fa-star');
+var $ratingLabel = document.querySelector('#rating-label');
+var $likedLabel = document.querySelector('#liked-label');
+var $heart = document.querySelector('.fa-heart');
+var $rewatchContainer = document.querySelector('#rewatch-container');
+var $entryFilmPoster = document.querySelector('#entry-film-poster');
+var $entryFilmTitle = document.querySelector('#entry-film-title');
+var $entryFilmYear = document.querySelector('#entry-film-year');
+var $movieEntryForm = document.querySelector('#movie-entry-form');
+var $userActionBanner = document.querySelector('.user-action-banner');
+var $navSearch = document.querySelector('#nav-search');
+
+if (data.view === 'search-result') {
+  renderSearchResult(data.lastSearch);
+  changeView('search-result');
+} else {
+  changeView(data.view);
+}
 
 function toggleModals(targetModal) {
   for (var i = 0; i < $modals.length; i++) {
@@ -41,7 +61,14 @@ function changeView(targetView) {
   }
 }
 
+function closeEntryModal(event) {
+  toggleModals('entry-form');
+}
+
+$closeEntryForm.addEventListener('click', closeEntryModal);
+
 function createSearchResult(response) {
+  resetEntryForm();
   var output = {};
 
   output.title = response.Title;
@@ -54,6 +81,7 @@ function createSearchResult(response) {
   output.poster = response.Poster;
   output.runtime = response.Runtime;
 
+  data.lastSearch = output;
   renderSearchResult(output);
   changeView('search-result');
   return output;
@@ -84,7 +112,7 @@ function createSearchResult(response) {
           </div>
         </div>
         <div class="mobile-width-half justify-flex-end align-center">
-          <div class="add-entry-btn justify-center align-center" data-modal="add-entry">
+          <div class="add-entry-btn justify-center align-center" data-modal="entry-form">
             <a href="#" class="white-plus">+</a>
           </div>
         </div>
@@ -196,7 +224,11 @@ function renderSearchResult(movie) {
 
   var $addEntryButton = document.createElement('div');
   $addEntryButton.className = 'add-entry-btn justify-center align-center';
-  $addEntryButton.setAttribute('data-modal', 'add-entry');
+  $addEntryButton.setAttribute('data-modal', 'entry-form');
+  $addEntryButton.addEventListener('click', function () {
+    addFilmToForm();
+    toggleModals('entry-form');
+  });
   $buttonHalf.appendChild($addEntryButton);
 
   var $plusSign = document.createElement('a');
@@ -233,7 +265,7 @@ function renderSearchResult(movie) {
   $castContainer.appendChild($actorsList);
 
   var $writersContainer = document.createElement('div');
-  $writersContainer.className = 'row align-center';
+  $writersContainer.className = 'row align-center mb-70';
   $filmInfo.appendChild($writersContainer);
 
   var $writers = document.createElement('p');
@@ -262,6 +294,7 @@ function searchTitle(event) {
 
   function returnTitleSearch(event) {
     createSearchResult(xhr.response);
+    $titleForm.reset();
   }
 
   xhr.addEventListener('load', returnTitleSearch);
@@ -280,11 +313,117 @@ function searchID(event) {
 
   function returnIdSearch(event) {
     createSearchResult(xhr.response);
+    $idForm.reset();
   }
 
   xhr.addEventListener('load', returnIdSearch);
   xhr.send();
 }
 
-$titleForm.addEventListener('submit', searchTitle);
 $idForm.addEventListener('submit', searchID);
+
+function addFilmToForm() {
+  $entryFilmPoster.setAttribute('src', data.lastSearch.poster);
+  $entryFilmTitle.textContent = data.lastSearch.title;
+  $entryFilmYear.textContent = data.lastSearch.year;
+  data.currentEntry.movie = data.lastSearch;
+}
+
+data.currentEntry.rating = 0;
+function rateMovie(event) {
+  if (event.target.tagName !== 'I') {
+    return;
+  }
+  var clickedStar = event.target;
+  var starIndex = parseInt(clickedStar.getAttribute('data-index'));
+  if (starIndex === 1 && data.currentEntry.rating === 1) {
+    for (var i = 0; i < $stars.length; i++) {
+      $stars[i].className = 'fas fa-star';
+    }
+    data.currentEntry.rating = 0;
+  } else {
+    for (i = 0; i < $stars.length; i++) {
+      if (i < starIndex) {
+        $stars[i].className = 'fas fa-star rated';
+      } else {
+        $stars[i].className = 'fas fa-star';
+      }
+    }
+    data.currentEntry.rating = starIndex;
+  }
+  if (data.currentEntry.rating !== 0) {
+    $ratingLabel.textContent = 'Rated';
+  } else {
+    $ratingLabel.textContent = 'Rate';
+  }
+}
+
+$starsContainer.addEventListener('click', rateMovie);
+
+function likeMovie(event) {
+  var clickedHeart = event.target;
+  if (clickedHeart.className === 'fas fa-heart liked') {
+    clickedHeart.className = 'fas fa-heart';
+    data.currentEntry.liked = false;
+  } else {
+    clickedHeart.className = 'fas fa-heart liked';
+    data.currentEntry.liked = true;
+  }
+  if (data.currentEntry.liked === true) {
+    $likedLabel.textContent = 'Liked';
+  } else {
+    $likedLabel.textContent = 'Like';
+  }
+}
+
+$heart.addEventListener('click', likeMovie);
+
+function rewatchedMovie(event) {
+  if (data.currentEntry.rewatched === false) {
+    $rewatchContainer.className = 'row padding-tb-75-rem flex-column align-center pt-1-5rem light-blue-text';
+    data.currentEntry.rewatched = true;
+  } else {
+    $rewatchContainer.className = 'row padding-tb-75-rem flex-column align-center pt-1-5rem grey-text';
+    data.currentEntry.rewatched = false;
+  }
+}
+
+$rewatchContainer.addEventListener('click', rewatchedMovie);
+
+function resetEntryForm() {
+  $movieEntryForm.reset();
+  data.currentEntry.rating = 0;
+  data.currentEntry.liked = false;
+  data.currentEntry.rewatched = false;
+  data.currentEntry.review = '';
+  data.currentEntry.date = '';
+  data.currentEntry.movie = {};
+}
+
+function saveEntry(event) {
+  event.preventDefault();
+  data.currentEntry.date = $movieEntryForm.elements.date.value;
+  data.currentEntry.review = $movieEntryForm.elements.review.value;
+  data.entries.push(data.currentEntry);
+  toggleModals('entry-form');
+  showBanner();
+  setTimeout(hideBanner, 3000);
+}
+
+$movieEntryForm.addEventListener('submit', saveEntry);
+
+function showBanner() {
+  var $bannerMovie = document.querySelector('#banner-movie');
+  $bannerMovie.textContent = data.currentEntry.movie.title;
+  $userActionBanner.className = 'user-action-banner white-text text-center font-size-12 justify-center align-flex-end drop-down';
+}
+
+function hideBanner() {
+  $userActionBanner.className = 'user-action-banner white-text text-center font-size-12 justify-center align-flex-end';
+}
+
+function navToSearchFilms(event) {
+  changeView('search-films');
+}
+
+$navSearch.addEventListener('click', navToSearchFilms);
