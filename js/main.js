@@ -17,6 +17,7 @@ var $entryFilmTitle = document.querySelector('#entry-film-title');
 var $entryFilmYear = document.querySelector('#entry-film-year');
 var $movieEntryForm = document.querySelector('#movie-entry-form');
 var $userActionBanner = document.querySelector('.user-action-banner');
+var $navSearch = document.querySelector('#nav-search');
 
 // if (data.view === 'search-result') {
 //   debugger;
@@ -266,7 +267,7 @@ function renderSearchResult(movie) {
   $castContainer.appendChild($actorsList);
 
   var $writersContainer = document.createElement('div');
-  $writersContainer.className = 'row align-center';
+  $writersContainer.className = 'row align-center mb-70';
   $filmInfo.appendChild($writersContainer);
 
   var $writers = document.createElement('p');
@@ -419,3 +420,9 @@ function showBanner() {
 function hideBanner() {
   $userActionBanner.className = 'user-action-banner white-text text-center font-size-12 justify-center align-flex-end';
 }
+
+function navToSearchFilms(event) {
+  changeView('search-films');
+}
+
+$navSearch.addEventListener('click', navToSearchFilms);
