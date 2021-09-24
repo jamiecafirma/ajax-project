@@ -5,6 +5,13 @@ var $titleForm = document.querySelector('#search-movie-title');
 var $idForm = document.querySelector('#search-id');
 var apikey = 'apikey=9de878f5';
 var $views = document.querySelectorAll('.view');
+var $closeEntryForm = document.querySelector('#close-entry-form');
+var $starsContainer = document.querySelector('.stars-container');
+var $stars = document.querySelectorAll('.fa-star');
+var $ratingLabel = document.querySelector('#rating-label');
+var $likedLabel = document.querySelector('#liked-label');
+var $heart = document.querySelector('.fa-heart');
+var $rewatchContainer = document.querySelector('#rewatch-container');
 
 // if (data.view === 'search-result') {
 //   debugger;
@@ -50,6 +57,12 @@ function changeView(targetView) {
     }
   }
 }
+
+function closeEntryModal(event) {
+  toggleModals('entry-form');
+}
+
+$closeEntryForm.addEventListener('click', closeEntryModal);
 
 function createSearchResult(response) {
   var output = {};
@@ -303,3 +316,64 @@ function searchID(event) {
 }
 
 $idForm.addEventListener('submit', searchID);
+
+data.currentEntry.rating = 0;
+function rateMovie(event) {
+  if (event.target.tagName !== 'I') {
+    return;
+  }
+  var clickedStar = event.target;
+  var starIndex = parseInt(clickedStar.getAttribute('data-index'));
+  if (starIndex === 1 && data.currentEntry.rating === 1) {
+    for (var i = 0; i < $stars.length; i++) {
+      $stars[i].className = 'fas fa-star';
+    }
+    data.currentEntry.rating = 0;
+  } else {
+    for (i = 0; i < $stars.length; i++) {
+      if (i < starIndex) {
+        $stars[i].className = 'fas fa-star rated';
+      } else {
+        $stars[i].className = 'fas fa-star';
+      }
+    }
+    data.currentEntry.rating = starIndex;
+  }
+  if (data.currentEntry.rating !== 0) {
+    $ratingLabel.textContent = 'Rated';
+  } else {
+    $ratingLabel.textContent = 'Rate';
+  }
+}
+
+$starsContainer.addEventListener('click', rateMovie);
+
+function likeMovie(event) {
+  var clickedHeart = event.target;
+  if (clickedHeart.className === 'fas fa-heart liked') {
+    clickedHeart.className = 'fas fa-heart';
+    data.currentEntry.liked = false;
+  } else {
+    clickedHeart.className = 'fas fa-heart liked';
+    data.currentEntry.liked = true;
+  }
+  if (data.currentEntry.liked === true) {
+    $likedLabel.textContent = 'Liked';
+  } else {
+    $likedLabel.textContent = 'Like';
+  }
+}
+
+$heart.addEventListener('click', likeMovie);
+
+function rewatchedMovie(event) {
+  if (data.currentEntry.rewatched === false) {
+    $rewatchContainer.className = 'row padding-tb-75-rem flex-column align-center pt-1-5rem light-blue-text';
+    data.currentEntry.rewatched = true;
+  } else {
+    $rewatchContainer.className = 'row padding-tb-75-rem flex-column align-center pt-1-5rem grey-text';
+    data.currentEntry.rewatched = false;
+  }
+}
+
+$rewatchContainer.addEventListener('click', rewatchedMovie);

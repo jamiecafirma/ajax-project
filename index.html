@@ -51,13 +51,13 @@
       </div>
     </div>
   </div>
-  <div class="modal hidden" id="entry-form-modal" data-modal="entry-form">
+  <div class="modal" id="entry-form-modal" data-modal="entry-form">
     <div class="entry-bg">
       <form id="movie-entry-form">
         <div class="row padding-sides-one-rem align-center justify-space-between">
-          <a class="grey-text" href="#">Cancel</a>
+          <a class="grey-text" href="#" id="close-entry-form">Cancel</a>
           <p class="white-text font-weight-700 entry-form-header">I Watched...</p>
-          <a class="green-text font-weight-700" href="#">Save</a>
+          <button type="submit" class="green-text font-weight-700" id="save-entry">Save</button>
         </div>
         <div class="row entry-form-dark-grey padding-sides-one-rem padding-tb-75-rem align-center">
           <img src="https://m.media-amazon.com/images/M/MV5BOWI2YWQxM2MtY2U4Yi00YjgzLTgwNzktN2ExNTgzNTIzMmUzXkEyXkFqcGdeQXVyMTAwMzUyOTc@._V1_SX300.jpg" alt="movie-poster" class="entry-form-poster" id="entry-film-poster">
@@ -79,10 +79,10 @@
         <div class="row padding-sides-one-rem">
           <div class="mobile-width-two-thirds">
             <div class="row">
-              <p>Rate</p>
+              <p id="rating-label">Rate</p>
             </div>
             <div class="row stars-container">
-              <i class="fas fa-star rated" data-index="1"></i>
+              <i class="fas fa-star" data-index="1"></i>
               <i class="fas fa-star" data-index="2"></i>
               <i class="fas fa-star" data-index="3"></i>
               <i class="fas fa-star" data-index="4"></i>
@@ -91,31 +91,30 @@
           </div>
           <div class="mobile-width-third flex-column align-flex-end">
             <div class="row width-37 justify-center">
-              <p class="">Like</p>
+              <p id="liked-label">Like</p>
             </div>
             <div class="row heart-container">
-              <i class="fas fa-heart liked"></i>
+              <i class="fas fa-heart"></i>
             </div>
           </div>
         </div>
         <hr class="dark-grey-border">
         <div class="row padding-sides-one-rem">
-          <textarea required
+          <textarea
           type="text"
           name="review"
           id="entry-review"
           class="padding-tb-75-rem"
-          placeholder="">Add review... or anything you want to say, go crazy ;)
-          </textarea>
+          placeholder="Add review... or anything you want to say, go crazy ;)"></textarea>
         </div>
         <hr class="dark-grey-border">
         <div class="row padding-sides-one-rem padding-tb-50-rem">
           <a href="#" data-modal="tags" id="tags-link" class="grey-text">Add tags...</a>
         </div>
         <hr class="dark-grey-border remove-margin-left">
-        <div class="row padding-tb-75-rem flex-column align-center pt-1-5rem">
-          <i class="fas fa-history grey-text"></i>
-          <p class="grey-text font-size-12">I've seen this film before</p>
+        <div class="row padding-tb-75-rem flex-column align-center pt-1-5rem grey-text" id="rewatch-container">
+          <i class="fas fa-history"></i>
+          <p class="font-size-12">I've seen this film before</p>
         </div>
       </form>
     </div>

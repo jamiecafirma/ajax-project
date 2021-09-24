@@ -318,3 +318,11 @@ a {
 .fa-history {
   font-size: 40px;
 }
+
+#save-entry {
+  background-color: #303b49;
+}
+
+textarea::placeholder {
+  color: #b8cadb;
+}

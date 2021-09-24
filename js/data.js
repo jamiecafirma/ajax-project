@@ -7,7 +7,15 @@ var data = {
   },
   view: 'search-film',
   lastSearch: {},
-  entries: []
+  entries: [],
+  currentEntry: {
+    rating: 0,
+    liked: false,
+    rewatched: false,
+    review: '',
+    date: '',
+    movie: {}
+  }
 };
 
 var previousDataJSON = localStorage.getItem('movie-diary-entries');
