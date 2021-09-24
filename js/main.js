@@ -16,6 +16,7 @@ var $entryFilmPoster = document.querySelector('#entry-film-poster');
 var $entryFilmTitle = document.querySelector('#entry-film-title');
 var $entryFilmYear = document.querySelector('#entry-film-year');
 var $movieEntryForm = document.querySelector('#movie-entry-form');
+var $userActionBanner = document.querySelector('.user-action-banner');
 
 // if (data.view === 'search-result') {
 //   debugger;
@@ -396,6 +397,8 @@ function saveEntry(event) {
   data.currentEntry.review = $movieEntryForm.elements.review.value;
   data.entries.push(data.currentEntry);
   toggleModals('entry-form');
+  showBanner();
+  setTimeout(hideBanner, 3000);
   // $movieEntryForm.reset();
   // data.currentEntry.rating = 0;
   // data.currentEntry.liked = false;
@@ -406,3 +409,13 @@ function saveEntry(event) {
 }
 
 $movieEntryForm.addEventListener('submit', saveEntry);
+
+function showBanner() {
+  var $bannerMovie = document.querySelector('#banner-movie');
+  $bannerMovie.textContent = data.currentEntry.movie.title;
+  $userActionBanner.className = 'user-action-banner white-text text-center font-size-12 justify-center align-flex-end drop-down';
+}
+
+function hideBanner() {
+  $userActionBanner.className = 'user-action-banner white-text text-center font-size-12 justify-center align-flex-end';
+}

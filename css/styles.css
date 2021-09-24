@@ -326,3 +326,15 @@ a {
 textarea::placeholder {
   color: #b8cadb;
 }
+
+.user-action-banner {
+  position: fixed;
+  background-color: #00e053;
+  width: 100%;
+  height: 0;
+  transition: height 1.5s 0.5s;
+}
+
+.user-action-banner.drop-down {
+  height: 80px;
+}
