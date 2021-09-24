@@ -19,15 +19,12 @@ var $movieEntryForm = document.querySelector('#movie-entry-form');
 var $userActionBanner = document.querySelector('.user-action-banner');
 var $navSearch = document.querySelector('#nav-search');
 
-// if (data.view === 'search-result') {
-//   debugger;
-//   renderSearchResult(data.lastSearch);
-//   changeView('search-result');
-// } else {
-//   changeView(data.view);
-// }
-
-// data.view = ('search-film');
+if (data.view === 'search-result') {
+  renderSearchResult(data.lastSearch);
+  changeView('search-result');
+} else {
+  changeView(data.view);
+}
 
 function toggleModals(targetModal) {
   for (var i = 0; i < $modals.length; i++) {
@@ -71,6 +68,7 @@ function closeEntryModal(event) {
 $closeEntryForm.addEventListener('click', closeEntryModal);
 
 function createSearchResult(response) {
+  resetEntryForm();
   var output = {};
 
   output.title = response.Title;
@@ -392,6 +390,16 @@ function rewatchedMovie(event) {
 
 $rewatchContainer.addEventListener('click', rewatchedMovie);
 
+function resetEntryForm() {
+  $movieEntryForm.reset();
+  data.currentEntry.rating = 0;
+  data.currentEntry.liked = false;
+  data.currentEntry.rewatched = false;
+  data.currentEntry.review = '';
+  data.currentEntry.date = '';
+  data.currentEntry.movie = {};
+}
+
 function saveEntry(event) {
   event.preventDefault();
   data.currentEntry.date = $movieEntryForm.elements.date.value;
@@ -400,13 +408,6 @@ function saveEntry(event) {
   toggleModals('entry-form');
   showBanner();
   setTimeout(hideBanner, 3000);
-  // $movieEntryForm.reset();
-  // data.currentEntry.rating = 0;
-  // data.currentEntry.liked = false;
-  // data.currentEntry.rewatched = false;
-  // data.currentEntry.review = '';
-  // data.currentEntry.date = '';
-  // data.currentEntry.movie = {};
 }
 
 $movieEntryForm.addEventListener('submit', saveEntry);
