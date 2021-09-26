@@ -14,6 +14,14 @@ var data = {
     rewatched: false,
     review: '',
     date: '',
+    formattedDate: {
+      year: 0,
+      day: 0,
+      month: 0,
+      fullMonth: '',
+      shortMonth: ''
+    },
+    sorting: 0,
     movie: {}
   }
 };
@@ -29,3 +37,12 @@ function addLocalStorage(event) {
 }
 
 window.addEventListener('beforeunload', addLocalStorage);
+
+function sortEntriesByWatchDate(entries) {
+  var newestFirst = entries;
+  newestFirst.sort(function (a, b) {
+    return b.sorting - a.sorting;
+  });
+}
+
+sortEntriesByWatchDate(data.entries);

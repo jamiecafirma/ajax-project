@@ -6,7 +6,7 @@
   <title>AJAX Project</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
   <link rel="icon" href="images/favicon.ico">
   <link
     rel="stylesheet"
@@ -20,10 +20,12 @@
     <p><strong id="banner-movie">All the President's Men</strong> was added to your diary</p>
   </div>
   <div class="nav-bar align-center justify-center">
-    <a href="#" id="nav-search" data-view="search-films">
-      <i class="fas fa-search nav-item" data-view="search-films"></i>
+    <a href="#" class="nav-button" data-view="search-films">
+      <i id="nav-search" class="fas fa-search nav-item"></i>
     </a>
-    <i class="fas fa-ticket-alt nav-item"></i>
+    <a href="#" class="nav-button" data-view="diary">
+      <i id="nav-diary" class="fas fa-ticket-alt nav-item"></i>
+    </a>
   </div>
   <div class="modal hidden" id="imdb-modal" data-modal="imdb">
     <div class="black-bg">
@@ -138,6 +140,13 @@
         </div>
       </div>
     </div>
+    <div class="view hidden" data-view="diary" id="diary-header-view">
+      <div class="row height-80 justify-center align-flex-end light-grey-border">
+        <div class="column-full">
+          <h3 class="text-center">Diary</h3>
+        </div>
+      </div>
+    </div>
   </header>
   <main>
     <div class="container">
@@ -202,6 +211,10 @@
               if the film’s original language isn’t English.</p>
             </div>
           </form>
+        </div>
+      </div>
+      <div class="view hidden" data-view="diary" id="diary-view">
+        <div class="grey-bg mb-70" id="diary-container">
         </div>
       </div>
     </div>

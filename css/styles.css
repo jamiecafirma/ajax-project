@@ -182,10 +182,6 @@ a {
   font-size: 14px;
 }
 
-.font-size-12 {
-  font-size: 12px;
-}
-
 .font-weight-700 {
   font-weight: 700;
 }
@@ -203,6 +199,10 @@ a {
 
 .letter-spacing-1px {
   letter-spacing: 1px;
+}
+
+.letter-spacing-point-1rem {
+  letter-spacing: 0.1rem;
 }
 
 .divider-dot {
@@ -359,4 +359,71 @@ textarea::placeholder {
 
 .mb-70 {
   margin-bottom: 70px;
+}
+
+.month-header {
+  background-color: #282f38;
+  padding: 0 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.all-caps {
+  text-transform: uppercase;
+}
+
+.font-size-12 {
+  font-size: 12px;
+}
+
+.margin-sides-4px {
+  margin: 0 4px;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.border-radius-2 {
+  border-radius: 2px;
+}
+
+.entry-pic {
+  width: 28px;
+  margin-right: 0.75rem;
+}
+
+.entry-day {
+  width: 40px;
+  height: 42px;
+  border: solid #282f38 1px;
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin-right: 0.75rem;
+}
+
+.font-weight-100 {
+  font-weight: 100;
+}
+
+.diary-entry-mg {
+  padding-top: 0.5rem;
+  padding-bottom: 0.25rem;
+}
+
+.diary-entry-divider {
+  border-bottom: solid #282f38 0.1px;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  margin-left: 115px;
+  margin-bottom: 0;
+}
+
+.diary-entry {
+  padding-left: 1.5rem;
+  padding-top: 0.5rem;
+}
+
+.blue-text {
+  color: #3fbcf4;
 }
