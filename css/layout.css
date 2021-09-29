@@ -13,16 +13,10 @@
 }
 
 .column-full,
-.column-half {
-  width: 100%;
-}
-
-.column-two-thirds {
-  width: calc(200% / 3);
-}
-
+.column-half,
+.column-two-thirds,
 .column-third {
-  width: calc(100% / 3);
+  width: 100%;
 }
 
 .mobile-width-half {
@@ -35,6 +29,11 @@
 
 .mobile-width-two-thirds {
   width: calc(200% / 3);
+}
+
+.imdb-modal-header {
+  width: 320px;
+  margin: auto;
 }
 
 .pop-up {
@@ -89,6 +88,18 @@ img {
 
   .column-half {
     width: 50%;
+  }
+
+  .column-two-thirds {
+    width: calc(200% / 3);
+  }
+
+  .column-third {
+    width: calc(100% / 3);
+  }
+
+  .imdb-modal-header {
+    width: 560px;
   }
 
   .pop-up {

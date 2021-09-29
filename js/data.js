@@ -7,14 +7,27 @@ var data = {
   },
   view: 'search-film',
   lastSearch: {},
+  lastDiaryEntry: null,
+  editing: null,
+  nextEntryId: 1,
   entries: [],
+  sortedEntries: [],
   currentEntry: {
     rating: 0,
     liked: false,
     rewatched: false,
     review: '',
     date: '',
-    movie: {}
+    formattedDate: {
+      year: 0,
+      day: 0,
+      month: 0,
+      fullMonth: '',
+      shortMonth: ''
+    },
+    sorting: 0,
+    movie: {},
+    entryId: 0
   }
 };
 
@@ -29,3 +42,13 @@ function addLocalStorage(event) {
 }
 
 window.addEventListener('beforeunload', addLocalStorage);
+
+function sortEntriesByWatchDate(entries) {
+  var newestFirst = entries;
+  newestFirst.sort(function (a, b) {
+    return b.sorting - a.sorting;
+  });
+  return newestFirst;
+}
+
+data.sortedEntries = sortEntriesByWatchDate(data.entries);

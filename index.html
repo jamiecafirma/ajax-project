@@ -6,7 +6,7 @@
   <title>AJAX Project</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
   <link rel="icon" href="images/favicon.ico">
   <link
     rel="stylesheet"
@@ -20,18 +20,20 @@
     <p><strong id="banner-movie">All the President's Men</strong> was added to your diary</p>
   </div>
   <div class="nav-bar align-center justify-center">
-    <a href="#" id="nav-search" data-view="search-films">
-      <i class="fas fa-search nav-item" data-view="search-films"></i>
+    <a href="#" class="nav-button" data-view="search-films">
+      <i id="nav-search" class="fas fa-search nav-item"></i>
     </a>
-    <i class="fas fa-ticket-alt nav-item"></i>
+    <a href="#" class="nav-button" data-view="diary">
+      <i id="nav-diary" class="fas fa-ticket-alt nav-item"></i>
+    </a>
   </div>
   <div class="modal hidden" id="imdb-modal" data-modal="imdb">
     <div class="black-bg">
-      <div class="row justify-center">
-        <div class="column-two-thirds justify-center">
+      <div class="row justify-space-between imdb-modal-header">
+        <div class="justify-center">
           <h2>What's an IMDb ID?</h2>
         </div>
-        <div class="column-one-third align-center">
+        <div class="align-center">
           <a href="#" class="white-text close-button" id="close-imdb" data-modal="imdb">
             <i class="fas fa-times"></i>
           </a>
@@ -138,6 +140,25 @@
         </div>
       </div>
     </div>
+    <div class="view hidden" data-view="diary" id="diary-header-view">
+      <div class="row height-80 justify-center align-flex-end light-grey-border">
+        <div class="column-full">
+          <h3 class="text-center">Diary</h3>
+        </div>
+      </div>
+    </div>
+    <div class="view hidden" data-view="individual-entry" id="individual-entry-header-view">
+      <div class="row height-80 justify-space-between align-flex-end light-grey-border padding-one-and-half-rem">
+        <a class="light-blue-text align-center" href="#" data-view="diary" id="back-to-diary">
+          <i class="fas fa-chevron-left font-size-20 mr-6"></i>
+          Back
+        </a>
+        <p class="white-text font-weight-700 no-margin">Diary Entry</p>
+        <a class="light-blue-text" href="#" data-modal="edit-delete" id="">
+          <i class="fas fa-pen font-size-20"></i>
+        </a>
+      </div>
+    </div>
   </header>
   <main>
     <div class="container">
@@ -203,6 +224,47 @@
             </div>
           </form>
         </div>
+      </div>
+      <div class="view hidden" data-view="diary" id="diary-view">
+        <div class="grey-bg mb-70" id="diary-container">
+        </div>
+      </div>
+      <div class="view hidden" data-view="individual-entry" id="individual-entry-view">
+        <div class="grey-bg padding-one-and-half-rem pt-1-5rem" id="">
+          <div class="row">
+            <div class="mobile-width-third">
+              <img id="ie-poster" src="https://m.media-amazon.com/images/M/MV5BOWI2YWQxM2MtY2U4Yi00YjgzLTgwNzktN2ExNTgzNTIzMmUzXkEyXkFqcGdeQXVyMTAwMzUyOTc@._V1_SX300.jpg" alt="movie-poster">
+            </div>
+            <div class="mobile-width-two-thirds flex-column pl-1rem">
+              <div class="row align-center">
+                <p id="ie-title" class="white-text font-weight-700 no-margin">All the President's Men</p>
+                <p id="ie-year" class="light-blue-text font-size-14 no-margin ml-4">1976</p>
+              </div>
+              <div class="row">
+                <p class="grey-text italic"><span id="ie-rewatch">Rewatched</span> <span id="ie-date">Sep 19, 2021</span></p>
+              </div>
+              <div class="row">
+                <div id="ie-rating" class="font-size-20 mr-6">
+                  <i class="fas fa-star rated no-margin hidden" data-index="1"></i>
+                  <i class="fas fa-star rated no-margin hidden" data-index="2"></i>
+                  <i class="fas fa-star rated no-margin hidden" data-index="3"></i>
+                  <i class="fas fa-star rated no-margin hidden" data-index="4"></i>
+                  <i class="fas fa-star rated no-margin hidden" data-index="5"></i>
+                </div>
+                <div class="font-size-20">
+                  <i id="ie-like" class="fas fa-heart liked hidden"></i>
+                </div>
+              </div>
+            </div>
+            <div class="row column-two-thirds">
+              <p id="ie-review" class="grey-text font-size-14 line-height-two">I love the scene where they eat at McDonalds at 3 in the morning</p>
+            </div>
+          </div>
+        </div>
+        <div class="grey-bg mb-70 row justify-space-between padding-one-and-half-rem" id="entry-to-search-link">
+            <a href="#" class="light-blue-text font-size-18">Go to film</a>
+            <i class="fas fa-chevron-right font-size-20 dark-grey-text"></i>
+          </div>
       </div>
     </div>
   </main>

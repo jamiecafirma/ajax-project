@@ -64,6 +64,10 @@ a {
   color: #91a2b3;
 }
 
+.dark-grey-text {
+  color: #505c6b;
+}
+
 .white-text {
   color: white;
 }
@@ -113,6 +117,10 @@ a {
 
 .padding-one-and-half-rem {
   padding: 1rem 1.5rem;
+}
+
+.pl-1rem {
+  padding-left: 1rem;
 }
 
 .text-center {
@@ -178,16 +186,28 @@ a {
   margin-right: 4px;
 }
 
+.mr-6 {
+  margin-right: 6px;
+}
+
 .font-size-14 {
   font-size: 14px;
 }
 
-.font-size-12 {
-  font-size: 12px;
+.font-size-18 {
+  font-size: 18px;
+}
+
+.font-size-20 {
+  font-size: 20px;
 }
 
 .font-weight-700 {
   font-weight: 700;
+}
+
+.italic {
+  font-style: italic;
 }
 
 .text-right {
@@ -203,6 +223,10 @@ a {
 
 .letter-spacing-1px {
   letter-spacing: 1px;
+}
+
+.letter-spacing-point-1rem {
+  letter-spacing: 0.1rem;
 }
 
 .divider-dot {
@@ -359,4 +383,80 @@ textarea::placeholder {
 
 .mb-70 {
   margin-bottom: 70px;
+}
+
+.month-header {
+  background-color: #282f38;
+  padding: 0 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.all-caps {
+  text-transform: uppercase;
+}
+
+.font-size-12 {
+  font-size: 12px;
+}
+
+.margin-sides-4px {
+  margin: 0 4px;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.ml-4 {
+  margin-left: 4px;
+}
+
+.border-radius-2 {
+  border-radius: 2px;
+}
+
+.entry-pic {
+  width: 28px;
+  margin-right: 0.75rem;
+}
+
+.entry-day {
+  width: 40px;
+  height: 42px;
+  border: solid #282f38 1px;
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin-right: 0.75rem;
+}
+
+.font-weight-100 {
+  font-weight: 100;
+}
+
+.diary-entry-mg {
+  padding-top: 0.5rem;
+  padding-bottom: 0.25rem;
+}
+
+.diary-entry-divider {
+  border-bottom: solid #282f38 0.1px;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  margin-left: 115px;
+  margin-bottom: 0;
+}
+
+.diary-entry {
+  padding-left: 1.5rem;
+  padding-top: 0.5rem;
+}
+
+.blue-text {
+  color: #3fbcf4;
+}
+
+#entry-to-search-link {
+  border-top: solid #505c6b 0.5px;
+  border-bottom: solid #505c6b 0.5px;
 }
