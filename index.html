@@ -130,6 +130,17 @@
       </form>
     </div>
   </div>
+  <div class="modal hidden" id="edit-delete-modal" data-modal="edit-delete">
+    <div class="black-bg bg-blur align-flex-end justify-center">
+      <div class="flex-column align-center mb-edit-delete-modal">
+        <p class="white-text font-size-18 font-weight-700">All the President's Men</p>
+        <p class="italic no-mt"><span>Rewatched</span> <span>Sep 19, 2021</span></p>
+        <a class="text-center orange-text padding-tb-75-rem edit-button border-radius-top button-border" href="#">Delete</a>
+        <a class="text-center light-blue-text padding-tb-75-rem edit-button border-radius-bottom" href="#">Edit</a>
+        <a id="close-edit-delete" data-modal="edit-delete" class="text-center light-blue-text font-weight-700 padding-one-and-half-rem edit-button border-radius-all mt-10" href="#">Done</a>
+      </div>
+    </div>
+  </div>
   <div class="view hidden" data-view="search-result" id="search-result-view">
   </div>
   <header>
@@ -154,7 +165,7 @@
           Back
         </a>
         <p class="white-text font-weight-700 no-margin">Diary Entry</p>
-        <a class="light-blue-text" href="#" data-modal="edit-delete" id="">
+        <a class="light-blue-text" href="#" data-modal="edit-delete" id="edit-delete-btn">
           <i class="fas fa-pen font-size-20"></i>
         </a>
       </div>

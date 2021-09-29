@@ -77,6 +77,10 @@
   font-family: 'Roboto', sans-serif;
 }
 
+.mb-edit-delete-modal {
+  margin-bottom: 40px;
+}
+
 img {
   width: 100%;
 }
@@ -117,5 +121,9 @@ img {
 
   #entry-review {
     height: 120px;
+  }
+
+  .mb-edit-delete-modal {
+    margin-bottom: 80px;
   }
 }

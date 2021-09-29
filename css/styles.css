@@ -56,6 +56,10 @@ a {
   padding-top: 180px;
 }
 
+.bg-blur {
+  backdrop-filter: blur(4px);
+}
+
 .light-blue-text {
   color: #b8cadb;
 }
@@ -74,6 +78,10 @@ a {
 
 .green-text {
   color: #00e053;
+}
+
+.orange-text {
+  color: #ff8f0d;
 }
 
 ::placeholder {
@@ -356,7 +364,7 @@ textarea::placeholder {
   background-color: #00e053;
   width: 100%;
   height: 0;
-  transition: height 1.5s 0.5s;
+  transition: height 1s 0.5s;
 }
 
 .user-action-banner.drop-down {
@@ -405,6 +413,14 @@ textarea::placeholder {
 
 .no-margin {
   margin: 0;
+}
+
+.no-mt {
+  margin-top: 0;
+}
+
+.mt-10 {
+  margin-top: 10px;
 }
 
 .ml-4 {
@@ -459,4 +475,25 @@ textarea::placeholder {
 #entry-to-search-link {
   border-top: solid #505c6b 0.5px;
   border-bottom: solid #505c6b 0.5px;
+}
+
+.edit-button {
+  background-color: #303b49;
+  width: 350px;
+}
+
+.border-radius-top {
+  border-radius: 10px 10px 0 0;
+}
+
+.border-radius-bottom {
+  border-radius: 0 0 10px 10px;
+}
+
+.border-radius-all {
+  border-radius: 10px;
+}
+
+.button-border {
+  border-bottom: solid #242b34 1px;
 }

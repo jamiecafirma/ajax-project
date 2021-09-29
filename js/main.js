@@ -21,13 +21,15 @@ var $navBar = document.querySelector('.nav-bar');
 var $navSearch = document.querySelector('#nav-search');
 var $navDiary = document.querySelector('#nav-diary');
 var $diaryContainer = document.querySelector('#diary-container');
+var $editDeleteBtn = document.querySelector('#edit-delete-btn');
+var $closeEditDelete = document.querySelector('#close-edit-delete');
 
 if (data.view === 'search-result') {
   renderSearchResult(data.lastSearch);
   changeView('search-result');
-// } else if (data.view === 'individual-entry') {
-//   createIndividualEntry(renderDiary(findLastDiaryEntryObject));
-//   changeView('individual-entry');
+} else if (data.view === 'individual-entry') {
+  createIndividualEntry(data.lastDiaryEntry);
+  changeView('individual-entry');
 } else {
   changeView(data.view);
 }
@@ -631,9 +633,9 @@ function renderDiary(entry) {
   $entryBlock.appendChild($entryDivider);
 
   $entryBlock.addEventListener('click', function () {
-    createIndividualEntry($entryBlock);
+    createIndividualEntry(parseInt($entryBlock.getAttribute('data-entry-id')));
     changeView('individual-entry');
-    data.lastDiaryEntry = $entryBlock.getAttribute('data-entry-id');
+    data.lastDiaryEntry = parseInt($entryBlock.getAttribute('data-entry-id'));
   });
 
   return $entryBlock;
@@ -663,7 +665,8 @@ function addEntryToMonth(entry) {
   var $months = document.querySelectorAll('.month');
   for (var m = 0; m < $months.length; m++) {
     var currentMonth = $months[m].getAttribute('data-month');
-    if (entry.getAttribute('data-month') === currentMonth) {
+    var currentYearOfMonth = $months[m].getAttribute('data-year');
+    if (entry.getAttribute('data-month') === currentMonth && entry.getAttribute('data-year') === currentYearOfMonth) {
       $months[m].appendChild(entry);
       return $months[m];
     }
@@ -697,8 +700,7 @@ function loadDiaryEntries(event) {
 
 document.addEventListener('DOMContentLoaded', loadDiaryEntries);
 
-function createIndividualEntry(entry) {
-  var entryId = parseInt(entry.getAttribute('data-entry-id'));
+function createIndividualEntry(entryId) {
 
   function ieToSearchResult(movie) {
     renderSearchResult(movie);
@@ -753,11 +755,9 @@ function createIndividualEntry(entry) {
   }
 }
 
-// function findLastDiaryEntryObject() {
-//   for (var i = 0; i < data.entries.length; i++) {
-//     if (data.entries[i].entryId === parseInt(data.lastDiaryEntry)) {
-//       var lastEntryViewed = data.entries[i];
-//       return lastEntryViewed;
-//     }
-//   }
-// }
+function toggleEditDeleteModal(event) {
+  toggleModals('edit-delete');
+}
+
+$editDeleteBtn.addEventListener('click', toggleEditDeleteModal);
+$closeEditDelete.addEventListener('click', toggleEditDeleteModal);
