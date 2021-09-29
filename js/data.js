@@ -7,7 +7,11 @@ var data = {
   },
   view: 'search-film',
   lastSearch: {},
+  lastDiaryEntry: null,
+  editing: null,
+  nextEntryId: 1,
   entries: [],
+  sortedEntries: [],
   currentEntry: {
     rating: 0,
     liked: false,
@@ -22,7 +26,8 @@ var data = {
       shortMonth: ''
     },
     sorting: 0,
-    movie: {}
+    movie: {},
+    entryId: 0
   }
 };
 
@@ -43,6 +48,7 @@ function sortEntriesByWatchDate(entries) {
   newestFirst.sort(function (a, b) {
     return b.sorting - a.sorting;
   });
+  return newestFirst;
 }
 
-sortEntriesByWatchDate(data.entries);
+data.sortedEntries = sortEntriesByWatchDate(data.entries);

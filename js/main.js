@@ -25,6 +25,9 @@ var $diaryContainer = document.querySelector('#diary-container');
 if (data.view === 'search-result') {
   renderSearchResult(data.lastSearch);
   changeView('search-result');
+// } else if (data.view === 'individual-entry') {
+//   createIndividualEntry(renderDiary(findLastDiaryEntryObject));
+//   changeView('individual-entry');
 } else {
   changeView(data.view);
 }
@@ -146,6 +149,9 @@ function createSearchResult(response) {
 
 function renderSearchResult(movie) {
   var $searchResultView = document.querySelector('#search-result-view');
+  if ($searchResultView.firstElementChild !== null) {
+    $searchResultView.removeChild($searchResultView.firstElementChild);
+  }
 
   var $movieOverview = document.createElement('div');
   $movieOverview.className = 'row container';
@@ -422,6 +428,8 @@ function saveEntry(event) {
   data.currentEntry.date = $movieEntryForm.elements.date.value;
   formatDate(data.currentEntry.date);
   data.currentEntry.review = $movieEntryForm.elements.review.value;
+  data.currentEntry.entryId = data.nextEntryId;
+  data.nextEntryId++;
   data.entries.push(data.currentEntry);
   toggleModals('entry-form');
   showBanner();
@@ -496,11 +504,35 @@ $navBar.addEventListener('click', navToSwitchViews);
 </div>
 <hr class="diary-entry-divider"></hr> */
 
+function showRating(ratingContainer, entry) {
+  for (var r = 0; r < ratingContainer.children.length; r++) {
+    ratingContainer.children[r].className = 'fas fa-star rated no-margin hidden';
+  }
+  for (var s = 0; s < entry.rating; s++) {
+    ratingContainer.children[s].className = 'fas fa-star rated no-margin';
+  }
+}
+
+function showLike(heart, entry) {
+  heart.className = 'fas fa-heart liked margin-sides-4px hidden';
+  if (entry.liked === true) {
+    heart.className = 'fas fa-heart liked margin-sides-4px';
+  }
+}
+
+function showRewatch(rewatchIcon, entry) {
+  if (entry.rewatched === true) {
+    rewatchIcon.className = 'fas fa-history light-blue-text font-size-12 margin-sides-4px';
+  }
+}
+
 function renderDiary(entry) {
   var $entryBlock = document.createElement('div');
   $entryBlock.setAttribute('data-year', entry.formattedDate.year);
   $entryBlock.setAttribute('data-month', entry.formattedDate.month);
   $entryBlock.setAttribute('data-full-month', entry.formattedDate.fullMonth);
+  $entryBlock.setAttribute('data-view', 'individual-entry');
+  $entryBlock.setAttribute('data-entry-id', entry.entryId);
 
   var $diaryEntry = document.createElement('div');
   $diaryEntry.className = 'row diary-entry';
@@ -550,47 +582,59 @@ function renderDiary(entry) {
   $ratingsContainer.appendChild($starRatingContainer);
 
   var $oneStar = document.createElement('i');
-  $oneStar.className = 'fas fa-star rated no-margin';
+  $oneStar.className = 'fas fa-star rated no-margin hidden';
   $oneStar.setAttribute('data-index', '1');
   $starRatingContainer.appendChild($oneStar);
 
   var $twoStar = document.createElement('i');
-  $twoStar.className = 'fas fa-star rated no-margin';
+  $twoStar.className = 'fas fa-star rated no-margin hidden';
   $twoStar.setAttribute('data-index', '2');
   $starRatingContainer.appendChild($twoStar);
 
   var $threeStar = document.createElement('i');
-  $threeStar.className = 'fas fa-star rated no-margin';
+  $threeStar.className = 'fas fa-star rated no-margin hidden';
   $threeStar.setAttribute('data-index', '3');
   $starRatingContainer.appendChild($threeStar);
 
   var $fourStar = document.createElement('i');
-  $fourStar.className = 'fas fa-star rated no-margin';
+  $fourStar.className = 'fas fa-star rated no-margin hidden';
   $fourStar.setAttribute('data-index', '4');
   $starRatingContainer.appendChild($fourStar);
 
   var $fiveStar = document.createElement('i');
-  $fiveStar.className = 'fas fa-star rated no-margin';
+  $fiveStar.className = 'fas fa-star rated no-margin hidden';
   $fiveStar.setAttribute('data-index', '5');
   $starRatingContainer.appendChild($fiveStar);
+
+  showRating($starRatingContainer, entry);
 
   var $likeContainer = document.createElement('div');
   $ratingsContainer.appendChild($likeContainer);
 
   var $likedMovie = document.createElement('i');
-  $likedMovie.className = 'fas fa-heart liked margin-sides-4px';
+  $likedMovie.className = 'fas fa-heart liked margin-sides-4px hidden';
   $likeContainer.appendChild($likedMovie);
+
+  showLike($likedMovie, entry);
 
   var $watchAgainContainer = document.createElement('div');
   $ratingsContainer.appendChild($watchAgainContainer);
 
   var $watchedAgain = document.createElement('i');
-  $watchedAgain.className = 'fas fa-history light-blue-text font-size-12 margin-sides-4px';
+  $watchedAgain.className = 'fas fa-history light-blue-text font-size-12 margin-sides-4px hidden';
   $watchAgainContainer.appendChild($watchedAgain);
+
+  showRewatch($watchedAgain, entry);
 
   var $entryDivider = document.createElement('hr');
   $entryDivider.className = 'diary-entry-divider';
   $entryBlock.appendChild($entryDivider);
+
+  $entryBlock.addEventListener('click', function () {
+    createIndividualEntry($entryBlock);
+    changeView('individual-entry');
+    data.lastDiaryEntry = $entryBlock.getAttribute('data-entry-id');
+  });
 
   return $entryBlock;
 }
@@ -644,11 +688,76 @@ function addEntryToMonth(entry) {
 }
 
 function loadDiaryEntries(event) {
-  for (var i = 0; i < data.entries.length; i++) {
-    var entryMonth = addEntryToMonth(renderDiary(data.entries[i]));
+  for (var i = 0; i < data.sortedEntries.length; i++) {
+    var entryMonth = addEntryToMonth(renderDiary(data.sortedEntries[i]));
     var entryYear = addMonthToYear(entryMonth);
     $diaryContainer.appendChild(entryYear);
   }
 }
 
 document.addEventListener('DOMContentLoaded', loadDiaryEntries);
+
+function createIndividualEntry(entry) {
+  var entryId = parseInt(entry.getAttribute('data-entry-id'));
+
+  function ieToSearchResult(movie) {
+    renderSearchResult(movie);
+    changeView('search-result');
+  }
+
+  for (var i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === entryId) {
+      var $iePoster = document.querySelector('#ie-poster');
+      $iePoster.setAttribute('src', data.entries[i].movie.poster);
+
+      var $ieTitle = document.querySelector('#ie-title');
+      $ieTitle.textContent = data.entries[i].movie.title;
+
+      var $ieYear = document.querySelector('#ie-year');
+      $ieYear.textContent = data.entries[i].movie.year;
+
+      var $ieDate = document.querySelector('#ie-date');
+      $ieDate.textContent = data.entries[i].formattedDate.shortMonth + ' ' + data.entries[i].formattedDate.day + ', ' + data.entries[i].formattedDate.year;
+
+      var $ieRewatch = document.querySelector('#ie-rewatch');
+      if (data.entries[i].rewatched === true) {
+        $ieRewatch.textContent = 'Rewatched';
+      } else {
+        $ieRewatch.textContent = 'Watched';
+      }
+
+      var $ieRating = document.querySelector('#ie-rating');
+
+      showRating($ieRating, data.entries[i]);
+
+      var $ieLike = document.querySelector('#ie-like');
+
+      showLike($ieLike, data.entries[i]);
+
+      var $ieReview = document.querySelector('#ie-review');
+      $ieReview.textContent = data.entries[i].review;
+
+      var $backToDiary = document.querySelector('#back-to-diary');
+      $backToDiary.addEventListener('click', function () {
+        changeView('diary');
+      });
+
+      var $entryToSearchLink = document.querySelector('#entry-to-search-link');
+
+      var entryMovie = data.entries[i].movie;
+
+      $entryToSearchLink.addEventListener('click', function () {
+        ieToSearchResult(entryMovie);
+      });
+    }
+  }
+}
+
+// function findLastDiaryEntryObject() {
+//   for (var i = 0; i < data.entries.length; i++) {
+//     if (data.entries[i].entryId === parseInt(data.lastDiaryEntry)) {
+//       var lastEntryViewed = data.entries[i];
+//       return lastEntryViewed;
+//     }
+//   }
+// }
