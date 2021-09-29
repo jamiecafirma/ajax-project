@@ -23,6 +23,7 @@ var $navDiary = document.querySelector('#nav-diary');
 var $diaryContainer = document.querySelector('#diary-container');
 var $editDeleteBtn = document.querySelector('#edit-delete-btn');
 var $closeEditDelete = document.querySelector('#close-edit-delete');
+var $editEntryBtn = document.querySelector('#edit-entry');
 
 if (data.view === 'search-result') {
   renderSearchResult(data.lastSearch);
@@ -761,3 +762,10 @@ function toggleEditDeleteModal(event) {
 
 $editDeleteBtn.addEventListener('click', toggleEditDeleteModal);
 $closeEditDelete.addEventListener('click', toggleEditDeleteModal);
+
+function showEditEntry(event) {
+  toggleModals('edit-delete');
+  toggleModals('entry-form');
+}
+
+$editEntryBtn.addEventListener('click', showEditEntry);
