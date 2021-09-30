@@ -24,6 +24,8 @@ var $diaryContainer = document.querySelector('#diary-container');
 var $editDeleteBtn = document.querySelector('#edit-delete-btn');
 var $closeEditDelete = document.querySelector('#close-edit-delete');
 var $editEntryBtn = document.querySelector('#edit-entry');
+var $editToDeleteBtn = document.querySelector('#edit-to-delete');
+var $closeDeleteModalBtn = document.querySelector('#close-delete-modal');
 
 if (data.view === 'search-result') {
   renderSearchResult(data.lastSearch);
@@ -848,3 +850,16 @@ function showEditEntry(event) {
 }
 
 $editEntryBtn.addEventListener('click', showEditEntry);
+
+function toggleDeleteModal(event) {
+  if (event.target.getAttribute('id') === 'edit-to-delete') {
+    toggleModals('edit-delete');
+    toggleModals('delete-entry');
+  } else {
+    toggleModals('delete-entry');
+    toggleModals('edit-delete');
+  }
+}
+
+$editToDeleteBtn.addEventListener('click', toggleDeleteModal);
+$closeDeleteModalBtn.addEventListener('click', toggleDeleteModal);

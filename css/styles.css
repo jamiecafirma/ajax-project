@@ -84,6 +84,14 @@ a {
   color: #ff8f0d;
 }
 
+.red-text {
+  color: #fe4439;
+}
+
+.medium-blue-text {
+  color: #438bef;
+}
+
 ::placeholder {
   color: #b8cadb;
 }
@@ -483,6 +491,11 @@ textarea::placeholder {
 
 .edit-button {
   background-color: #303b49;
+  width: 350px;
+}
+
+.delete-button {
+  background-color: #242425;
   width: 350px;
 }
 
