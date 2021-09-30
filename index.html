@@ -130,12 +130,20 @@
       </form>
     </div>
   </div>
+  <div class="modal hidden" id="delete-entry-modal" data-modal="delete-entry">
+    <div class="black-bg align-flex-end justify-center">
+      <div class="flex-column align-center mb-edit-delete-modal">
+        <a id="delete-entry" class="delete-button font-size-20 text-center red-text padding-one-and-half-rem border-radius-all" href="#">Delete Diary Entry</a>
+        <a id="close-delete-modal" data-modal="delete-entry" class="delete-button font-size-20 text-center medium-blue-text font-weight-700 padding-one-and-half-rem border-radius-all mt-10" href="#">Cancel</a>
+      </div>
+    </div>
+  </div>
   <div class="modal hidden" id="edit-delete-modal" data-modal="edit-delete">
     <div class="black-bg bg-blur align-flex-end justify-center">
       <div class="flex-column align-center mb-edit-delete-modal">
         <p id="edit-delete-title" class="white-text font-size-18 font-weight-700 mb-12">All the President's Men</p>
         <p class="italic no-mt"><span id="edit-delete-rewatch">Rewatched</span> <span id="edit-delete-date">Sep 19, 2021</span></p>
-        <a class="text-center orange-text padding-tb-75-rem edit-button border-radius-top button-border" href="#">Delete</a>
+        <a id="edit-to-delete" data-modal="delete-entry" class="text-center orange-text padding-tb-75-rem edit-button border-radius-top button-border" href="#">Delete</a>
         <a id="edit-entry" data-modal="entry-form" class="text-center light-blue-text padding-tb-75-rem edit-button border-radius-bottom" href="#">Edit</a>
         <a id="close-edit-delete" data-modal="edit-delete" class="text-center light-blue-text font-weight-700 padding-one-and-half-rem edit-button border-radius-all mt-10" href="#">Done</a>
       </div>
