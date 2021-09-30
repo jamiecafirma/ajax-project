@@ -26,6 +26,7 @@ var $closeEditDelete = document.querySelector('#close-edit-delete');
 var $editEntryBtn = document.querySelector('#edit-entry');
 var $editToDeleteBtn = document.querySelector('#edit-to-delete');
 var $closeDeleteModalBtn = document.querySelector('#close-delete-modal');
+var $deleteEntryBtn = document.querySelector('#delete-entry');
 
 if (data.view === 'search-result') {
   renderSearchResult(data.lastSearch);
@@ -456,7 +457,6 @@ function saveEntry(event) {
         data.entries[i].liked = data.currentEntry.liked;
         data.entries[i].rewatched = data.currentEntry.rewatched;
         createIndividualEntry(data.entries[i].entryId);
-        // data.editing.replaceWith(createIndividualEntry(data.entries[i].entryId));
         data.editing = null;
         showBanner(data.currentEntry, true);
       }
@@ -578,6 +578,7 @@ function renderDiary(entry) {
   $entryBlock.setAttribute('data-full-month', entry.formattedDate.fullMonth);
   $entryBlock.setAttribute('data-view', 'individual-entry');
   $entryBlock.setAttribute('data-entry-id', entry.entryId);
+  $entryBlock.className = 'entry-block';
 
   var $diaryEntry = document.createElement('div');
   $diaryEntry.className = 'row diary-entry';
@@ -863,3 +864,25 @@ function toggleDeleteModal(event) {
 
 $editToDeleteBtn.addEventListener('click', toggleDeleteModal);
 $closeDeleteModalBtn.addEventListener('click', toggleDeleteModal);
+
+function deleteDiaryEntry(event) {
+  for (var i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === data.lastDiaryEntry) {
+      data.entries.splice(i, 1);
+      var $entryBlocks = document.querySelectorAll('.entry-block');
+      for (var e = 0; e < $entryBlocks.length; e++) {
+        if (parseInt($entryBlocks[e].getAttribute('data-entry-id')) === data.lastDiaryEntry) {
+          if ($entryBlocks[e].closest('.month').children.length === 2) {
+            $entryBlocks[e].closest('.month').remove();
+          } else {
+            $entryBlocks[e].remove();
+          }
+        }
+      }
+      toggleModals('delete-entry');
+      changeView('diary');
+    }
+  }
+}
+
+$deleteEntryBtn.addEventListener('click', deleteDiaryEntry);
