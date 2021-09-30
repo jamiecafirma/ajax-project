@@ -7,7 +7,7 @@ var apikey = 'apikey=9de878f5';
 var $views = document.querySelectorAll('.view');
 var $closeEntryForm = document.querySelector('#close-entry-form');
 var $starsContainer = document.querySelector('.stars-container');
-var $stars = document.querySelectorAll('.fa-star');
+var $stars = document.querySelectorAll('.form-star');
 var $ratingLabel = document.querySelector('#rating-label');
 var $likedLabel = document.querySelector('#liked-label');
 var $heart = document.querySelector('.fa-heart');
@@ -21,13 +21,16 @@ var $navBar = document.querySelector('.nav-bar');
 var $navSearch = document.querySelector('#nav-search');
 var $navDiary = document.querySelector('#nav-diary');
 var $diaryContainer = document.querySelector('#diary-container');
+var $editDeleteBtn = document.querySelector('#edit-delete-btn');
+var $closeEditDelete = document.querySelector('#close-edit-delete');
+var $editEntryBtn = document.querySelector('#edit-entry');
 
 if (data.view === 'search-result') {
   renderSearchResult(data.lastSearch);
   changeView('search-result');
-// } else if (data.view === 'individual-entry') {
-//   createIndividualEntry(renderDiary(findLastDiaryEntryObject));
-//   changeView('individual-entry');
+} else if (data.view === 'individual-entry') {
+  createIndividualEntry(data.lastDiaryEntry);
+  changeView('individual-entry');
 } else {
   changeView(data.view);
 }
@@ -68,6 +71,21 @@ function changeView(targetView) {
 }
 
 function closeEntryModal(event) {
+  if (event.target.getAttribute('id') === 'close-entry-form') {
+    if (data.editing !== null) {
+      for (var i = 0; i < data.entries.length; i++) {
+        if (data.entries[i].entryId === data.lastDiaryEntry) {
+          data.entries[i] = data.beforeEditing;
+          data.editing = null;
+        }
+      }
+    }
+    for (var s = 0; s < $stars.length; s++) {
+      $stars[s].className = 'fas fa-star form-star';
+    }
+    $heart.className = 'fas fa-heart';
+    $rewatchContainer.className = 'row padding-tb-75-rem flex-column align-center pt-1-5rem grey-text';
+  }
   toggleModals('entry-form');
 }
 
@@ -235,7 +253,7 @@ function renderSearchResult(movie) {
   $addEntryButton.className = 'add-entry-btn justify-center align-center';
   $addEntryButton.setAttribute('data-modal', 'entry-form');
   $addEntryButton.addEventListener('click', function () {
-    addFilmToForm();
+    addFilmToForm(data.lastSearch);
     toggleModals('entry-form');
   });
   $buttonHalf.appendChild($addEntryButton);
@@ -331,11 +349,11 @@ function searchID(event) {
 
 $idForm.addEventListener('submit', searchID);
 
-function addFilmToForm() {
-  $entryFilmPoster.setAttribute('src', data.lastSearch.poster);
-  $entryFilmTitle.textContent = data.lastSearch.title;
-  $entryFilmYear.textContent = data.lastSearch.year;
-  data.currentEntry.movie = data.lastSearch;
+function addFilmToForm(film) {
+  $entryFilmPoster.setAttribute('src', film.poster);
+  $entryFilmTitle.textContent = film.title;
+  $entryFilmYear.textContent = film.year;
+  data.currentEntry.movie = film;
 }
 
 data.currentEntry.rating = 0;
@@ -347,15 +365,15 @@ function rateMovie(event) {
   var starIndex = parseInt(clickedStar.getAttribute('data-index'));
   if (starIndex === 1 && data.currentEntry.rating === 1) {
     for (var i = 0; i < $stars.length; i++) {
-      $stars[i].className = 'fas fa-star';
+      $stars[i].className = 'fas fa-star form-star';
     }
     data.currentEntry.rating = 0;
   } else {
     for (i = 0; i < $stars.length; i++) {
       if (i < starIndex) {
-        $stars[i].className = 'fas fa-star rated';
+        $stars[i].className = 'fas fa-star form-star rated';
       } else {
-        $stars[i].className = 'fas fa-star';
+        $stars[i].className = 'fas fa-star form-star';
       }
     }
     data.currentEntry.rating = starIndex;
@@ -409,38 +427,63 @@ function resetEntryForm() {
   data.currentEntry.movie = {};
 }
 
-function formatDate(date) {
+function formatDate(date, entry) {
   var yearMonthDay = date.split('-');
   var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   var shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  data.currentEntry.formattedDate.year = parseInt(yearMonthDay[0]);
-  data.currentEntry.formattedDate.day = parseInt(yearMonthDay[2]);
-  data.currentEntry.formattedDate.month = parseInt(yearMonthDay[1]);
-  data.currentEntry.formattedDate.fullMonth = months[data.currentEntry.formattedDate.month - 1];
-  data.currentEntry.formattedDate.shortMonth = shortMonths[data.currentEntry.formattedDate.month - 1];
+  entry.formattedDate.year = parseInt(yearMonthDay[0]);
+  entry.formattedDate.day = parseInt(yearMonthDay[2]);
+  entry.formattedDate.month = parseInt(yearMonthDay[1]);
+  entry.formattedDate.fullMonth = months[entry.formattedDate.month - 1];
+  entry.formattedDate.shortMonth = shortMonths[entry.formattedDate.month - 1];
 
-  var sortDate = new Date(data.currentEntry.formattedDate.month + '/' + data.currentEntry.formattedDate.day + '/' + data.currentEntry.formattedDate.year);
-  data.currentEntry.sorting = sortDate.getTime();
+  var sortDate = new Date(entry.formattedDate.month + '/' + entry.formattedDate.day + '/' + entry.formattedDate.year);
+  entry.sorting = sortDate.getTime();
 }
 
 function saveEntry(event) {
   event.preventDefault();
-  data.currentEntry.date = $movieEntryForm.elements.date.value;
-  formatDate(data.currentEntry.date);
-  data.currentEntry.review = $movieEntryForm.elements.review.value;
-  data.currentEntry.entryId = data.nextEntryId;
-  data.nextEntryId++;
-  data.entries.push(data.currentEntry);
+
+  if (data.editing !== null) {
+    for (var i = 0; i < data.entries.length; i++) {
+      if (data.entries[i].entryId === data.lastDiaryEntry) {
+        data.entries[i].date = $movieEntryForm.elements.date.value;
+        formatDate(data.entries[i].date, data.entries[i]);
+        data.entries[i].review = $movieEntryForm.elements.review.value;
+        data.entries[i].rating = data.currentEntry.rating;
+        data.entries[i].liked = data.currentEntry.liked;
+        data.entries[i].rewatched = data.currentEntry.rewatched;
+        createIndividualEntry(data.entries[i].entryId);
+        // data.editing.replaceWith(createIndividualEntry(data.entries[i].entryId));
+        data.editing = null;
+        showBanner(data.currentEntry, true);
+      }
+    }
+  } else {
+    data.currentEntry.date = $movieEntryForm.elements.date.value;
+    formatDate(data.currentEntry.date, data.currentEntry);
+    data.currentEntry.review = $movieEntryForm.elements.review.value;
+    data.currentEntry.entryId = data.nextEntryId;
+    data.nextEntryId++;
+    data.entries.push(data.currentEntry);
+    showBanner(data.currentEntry, false);
+  }
   toggleModals('entry-form');
-  showBanner();
   setTimeout(hideBanner, 3000);
 }
 
 $movieEntryForm.addEventListener('submit', saveEntry);
 
-function showBanner() {
+function showBanner(entry, editing) {
+  var $bannerMessage1 = document.querySelector('#banner-message-p1');
+  var $bannerMessage2 = document.querySelector('#banner-message-p2');
   var $bannerMovie = document.querySelector('#banner-movie');
-  $bannerMovie.textContent = data.currentEntry.movie.title;
+
+  if (editing === true) {
+    $bannerMessage1.textContent = 'Your diary entry of ';
+    $bannerMessage2.textContent = ' was updated';
+  }
+  $bannerMovie.textContent = entry.movie.title;
   $userActionBanner.className = 'user-action-banner white-text text-center font-size-12 justify-center align-flex-end drop-down';
 }
 
@@ -631,9 +674,9 @@ function renderDiary(entry) {
   $entryBlock.appendChild($entryDivider);
 
   $entryBlock.addEventListener('click', function () {
-    createIndividualEntry($entryBlock);
+    createIndividualEntry(parseInt($entryBlock.getAttribute('data-entry-id')));
     changeView('individual-entry');
-    data.lastDiaryEntry = $entryBlock.getAttribute('data-entry-id');
+    data.lastDiaryEntry = parseInt($entryBlock.getAttribute('data-entry-id'));
   });
 
   return $entryBlock;
@@ -663,7 +706,8 @@ function addEntryToMonth(entry) {
   var $months = document.querySelectorAll('.month');
   for (var m = 0; m < $months.length; m++) {
     var currentMonth = $months[m].getAttribute('data-month');
-    if (entry.getAttribute('data-month') === currentMonth) {
+    var currentYearOfMonth = $months[m].getAttribute('data-year');
+    if (entry.getAttribute('data-month') === currentMonth && entry.getAttribute('data-year') === currentYearOfMonth) {
       $months[m].appendChild(entry);
       return $months[m];
     }
@@ -697,8 +741,7 @@ function loadDiaryEntries(event) {
 
 document.addEventListener('DOMContentLoaded', loadDiaryEntries);
 
-function createIndividualEntry(entry) {
-  var entryId = parseInt(entry.getAttribute('data-entry-id'));
+function createIndividualEntry(entryId) {
 
   function ieToSearchResult(movie) {
     renderSearchResult(movie);
@@ -753,11 +796,55 @@ function createIndividualEntry(entry) {
   }
 }
 
-// function findLastDiaryEntryObject() {
-//   for (var i = 0; i < data.entries.length; i++) {
-//     if (data.entries[i].entryId === parseInt(data.lastDiaryEntry)) {
-//       var lastEntryViewed = data.entries[i];
-//       return lastEntryViewed;
-//     }
-//   }
-// }
+function toggleEditDeleteModal(event) {
+  var currentEntryInfo = {};
+  for (var i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === data.lastDiaryEntry) {
+      currentEntryInfo = data.entries[i];
+    }
+  }
+  var $editDeleteTitle = document.querySelector('#edit-delete-title');
+  $editDeleteTitle.textContent = currentEntryInfo.movie.title;
+
+  var $editDeleteRewatch = document.querySelector('#edit-delete-rewatch');
+  if (currentEntryInfo.rewatched === true) {
+    $editDeleteRewatch.textContent = 'Rewatched';
+  } else {
+    $editDeleteRewatch.textContent = 'Watched';
+  }
+
+  var $editDeleteDate = document.querySelector('#edit-delete-date');
+  $editDeleteDate.textContent = currentEntryInfo.formattedDate.shortMonth + ' ' + currentEntryInfo.formattedDate.day + ', ' + currentEntryInfo.formattedDate.year;
+
+  toggleModals('edit-delete');
+}
+
+$editDeleteBtn.addEventListener('click', toggleEditDeleteModal);
+$closeEditDelete.addEventListener('click', toggleEditDeleteModal);
+
+function showEditEntry(event) {
+  toggleModals('edit-delete');
+  toggleModals('entry-form');
+  var editedEntryId = data.lastDiaryEntry;
+  var $currentIndividualEntry = document.querySelector('.ie-container');
+  data.editing = $currentIndividualEntry;
+  for (var i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === editedEntryId) {
+      data.beforeEditing = data.entries[i];
+      addFilmToForm(data.entries[i].movie);
+      $movieEntryForm.elements.date.value = data.entries[i].date;
+      $movieEntryForm.elements.review.value = data.entries[i].review;
+      for (var currentStar = 0; currentStar < data.entries[i].rating; currentStar++) {
+        $starsContainer.children[currentStar].className = 'fas fa-star form-star rated';
+      }
+      if (data.entries[i].liked === true) {
+        $heart.className = 'fas fa-heart liked';
+      }
+      if (data.entries[i].rewatched === true) {
+        $rewatchContainer.className = 'row padding-tb-75-rem flex-column align-center pt-1-5rem light-blue-text';
+      }
+    }
+  }
+}
+
+$editEntryBtn.addEventListener('click', showEditEntry);

@@ -9,6 +9,7 @@ var data = {
   lastSearch: {},
   lastDiaryEntry: null,
   editing: null,
+  beforeEditing: {},
   nextEntryId: 1,
   entries: [],
   sortedEntries: [],
