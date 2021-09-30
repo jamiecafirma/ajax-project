@@ -7,7 +7,7 @@ var apikey = 'apikey=9de878f5';
 var $views = document.querySelectorAll('.view');
 var $closeEntryForm = document.querySelector('#close-entry-form');
 var $starsContainer = document.querySelector('.stars-container');
-var $stars = document.querySelectorAll('.fa-star');
+var $stars = document.querySelectorAll('.form-star');
 var $ratingLabel = document.querySelector('#rating-label');
 var $likedLabel = document.querySelector('#liked-label');
 var $heart = document.querySelector('.fa-heart');
@@ -71,6 +71,13 @@ function changeView(targetView) {
 }
 
 function closeEntryModal(event) {
+  if (event.target.getAttribute('id') === 'close-entry-form') {
+    for (var s = 0; s < $stars.length; s++) {
+      $stars[s].className = 'fas fa-star form-star';
+    }
+    $heart.className = 'fas fa-heart';
+    $rewatchContainer.className = 'row padding-tb-75-rem flex-column align-center pt-1-5rem grey-text';
+  }
   toggleModals('entry-form');
 }
 
@@ -238,7 +245,7 @@ function renderSearchResult(movie) {
   $addEntryButton.className = 'add-entry-btn justify-center align-center';
   $addEntryButton.setAttribute('data-modal', 'entry-form');
   $addEntryButton.addEventListener('click', function () {
-    addFilmToForm();
+    addFilmToForm(data.lastSearch);
     toggleModals('entry-form');
   });
   $buttonHalf.appendChild($addEntryButton);
@@ -334,11 +341,11 @@ function searchID(event) {
 
 $idForm.addEventListener('submit', searchID);
 
-function addFilmToForm() {
-  $entryFilmPoster.setAttribute('src', data.lastSearch.poster);
-  $entryFilmTitle.textContent = data.lastSearch.title;
-  $entryFilmYear.textContent = data.lastSearch.year;
-  data.currentEntry.movie = data.lastSearch;
+function addFilmToForm(film) {
+  $entryFilmPoster.setAttribute('src', film.poster);
+  $entryFilmTitle.textContent = film.title;
+  $entryFilmYear.textContent = film.year;
+  data.currentEntry.movie = film;
 }
 
 data.currentEntry.rating = 0;
@@ -350,15 +357,15 @@ function rateMovie(event) {
   var starIndex = parseInt(clickedStar.getAttribute('data-index'));
   if (starIndex === 1 && data.currentEntry.rating === 1) {
     for (var i = 0; i < $stars.length; i++) {
-      $stars[i].className = 'fas fa-star';
+      $stars[i].className = 'fas fa-star form-star';
     }
     data.currentEntry.rating = 0;
   } else {
     for (i = 0; i < $stars.length; i++) {
       if (i < starIndex) {
-        $stars[i].className = 'fas fa-star rated';
+        $stars[i].className = 'fas fa-star form-star rated';
       } else {
-        $stars[i].className = 'fas fa-star';
+        $stars[i].className = 'fas fa-star form-star';
       }
     }
     data.currentEntry.rating = starIndex;
@@ -766,6 +773,25 @@ $closeEditDelete.addEventListener('click', toggleEditDeleteModal);
 function showEditEntry(event) {
   toggleModals('edit-delete');
   toggleModals('entry-form');
+  var editedEntryId = data.lastDiaryEntry;
+  var $currentIndividualEntry = document.querySelector('#individual-entry-view');
+  data.editing = $currentIndividualEntry.firstElementChild;
+  for (var i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === editedEntryId) {
+      addFilmToForm(data.entries[i].movie);
+      $movieEntryForm.elements.date.value = data.entries[i].date;
+      $movieEntryForm.elements.review.value = data.entries[i].review;
+      for (var currentStar = 0; currentStar < data.entries[i].rating; currentStar++) {
+        $starsContainer.children[currentStar].className = 'fas fa-star form-star rated';
+      }
+      if (data.entries[i].liked === true) {
+        $heart.className = 'fas fa-heart liked';
+      }
+      if (data.entries[i].rewatched === true) {
+        $rewatchContainer.className = 'row padding-tb-75-rem flex-column align-center pt-1-5rem light-blue-text';
+      }
+    }
+  }
 }
 
 $editEntryBtn.addEventListener('click', showEditEntry);
