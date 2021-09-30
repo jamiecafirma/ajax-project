@@ -72,6 +72,14 @@ function changeView(targetView) {
 
 function closeEntryModal(event) {
   if (event.target.getAttribute('id') === 'close-entry-form') {
+    if (data.editing !== null) {
+      for (var i = 0; i < data.entries.length; i++) {
+        if (data.entries[i].entryId === data.lastDiaryEntry) {
+          data.entries[i] = data.beforeEditing;
+          data.editing = null;
+        }
+      }
+    }
     for (var s = 0; s < $stars.length; s++) {
       $stars[s].className = 'fas fa-star form-star';
     }
@@ -419,38 +427,63 @@ function resetEntryForm() {
   data.currentEntry.movie = {};
 }
 
-function formatDate(date) {
+function formatDate(date, entry) {
   var yearMonthDay = date.split('-');
   var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   var shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  data.currentEntry.formattedDate.year = parseInt(yearMonthDay[0]);
-  data.currentEntry.formattedDate.day = parseInt(yearMonthDay[2]);
-  data.currentEntry.formattedDate.month = parseInt(yearMonthDay[1]);
-  data.currentEntry.formattedDate.fullMonth = months[data.currentEntry.formattedDate.month - 1];
-  data.currentEntry.formattedDate.shortMonth = shortMonths[data.currentEntry.formattedDate.month - 1];
+  entry.formattedDate.year = parseInt(yearMonthDay[0]);
+  entry.formattedDate.day = parseInt(yearMonthDay[2]);
+  entry.formattedDate.month = parseInt(yearMonthDay[1]);
+  entry.formattedDate.fullMonth = months[entry.formattedDate.month - 1];
+  entry.formattedDate.shortMonth = shortMonths[entry.formattedDate.month - 1];
 
-  var sortDate = new Date(data.currentEntry.formattedDate.month + '/' + data.currentEntry.formattedDate.day + '/' + data.currentEntry.formattedDate.year);
-  data.currentEntry.sorting = sortDate.getTime();
+  var sortDate = new Date(entry.formattedDate.month + '/' + entry.formattedDate.day + '/' + entry.formattedDate.year);
+  entry.sorting = sortDate.getTime();
 }
 
 function saveEntry(event) {
   event.preventDefault();
-  data.currentEntry.date = $movieEntryForm.elements.date.value;
-  formatDate(data.currentEntry.date);
-  data.currentEntry.review = $movieEntryForm.elements.review.value;
-  data.currentEntry.entryId = data.nextEntryId;
-  data.nextEntryId++;
-  data.entries.push(data.currentEntry);
+
+  if (data.editing !== null) {
+    for (var i = 0; i < data.entries.length; i++) {
+      if (data.entries[i].entryId === data.lastDiaryEntry) {
+        data.entries[i].date = $movieEntryForm.elements.date.value;
+        formatDate(data.entries[i].date, data.entries[i]);
+        data.entries[i].review = $movieEntryForm.elements.review.value;
+        data.entries[i].rating = data.currentEntry.rating;
+        data.entries[i].liked = data.currentEntry.liked;
+        data.entries[i].rewatched = data.currentEntry.rewatched;
+        createIndividualEntry(data.entries[i].entryId);
+        // data.editing.replaceWith(createIndividualEntry(data.entries[i].entryId));
+        data.editing = null;
+        showBanner(data.currentEntry, true);
+      }
+    }
+  } else {
+    data.currentEntry.date = $movieEntryForm.elements.date.value;
+    formatDate(data.currentEntry.date, data.currentEntry);
+    data.currentEntry.review = $movieEntryForm.elements.review.value;
+    data.currentEntry.entryId = data.nextEntryId;
+    data.nextEntryId++;
+    data.entries.push(data.currentEntry);
+    showBanner(data.currentEntry, false);
+  }
   toggleModals('entry-form');
-  showBanner();
   setTimeout(hideBanner, 3000);
 }
 
 $movieEntryForm.addEventListener('submit', saveEntry);
 
-function showBanner() {
+function showBanner(entry, editing) {
+  var $bannerMessage1 = document.querySelector('#banner-message-p1');
+  var $bannerMessage2 = document.querySelector('#banner-message-p2');
   var $bannerMovie = document.querySelector('#banner-movie');
-  $bannerMovie.textContent = data.currentEntry.movie.title;
+
+  if (editing === true) {
+    $bannerMessage1.textContent = 'Your diary entry of ';
+    $bannerMessage2.textContent = ' was updated';
+  }
+  $bannerMovie.textContent = entry.movie.title;
   $userActionBanner.className = 'user-action-banner white-text text-center font-size-12 justify-center align-flex-end drop-down';
 }
 
@@ -764,6 +797,25 @@ function createIndividualEntry(entryId) {
 }
 
 function toggleEditDeleteModal(event) {
+  var currentEntryInfo = {};
+  for (var i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === data.lastDiaryEntry) {
+      currentEntryInfo = data.entries[i];
+    }
+  }
+  var $editDeleteTitle = document.querySelector('#edit-delete-title');
+  $editDeleteTitle.textContent = currentEntryInfo.movie.title;
+
+  var $editDeleteRewatch = document.querySelector('#edit-delete-rewatch');
+  if (currentEntryInfo.rewatched === true) {
+    $editDeleteRewatch.textContent = 'Rewatched';
+  } else {
+    $editDeleteRewatch.textContent = 'Watched';
+  }
+
+  var $editDeleteDate = document.querySelector('#edit-delete-date');
+  $editDeleteDate.textContent = currentEntryInfo.formattedDate.shortMonth + ' ' + currentEntryInfo.formattedDate.day + ', ' + currentEntryInfo.formattedDate.year;
+
   toggleModals('edit-delete');
 }
 
@@ -774,10 +826,11 @@ function showEditEntry(event) {
   toggleModals('edit-delete');
   toggleModals('entry-form');
   var editedEntryId = data.lastDiaryEntry;
-  var $currentIndividualEntry = document.querySelector('#individual-entry-view');
-  data.editing = $currentIndividualEntry.firstElementChild;
+  var $currentIndividualEntry = document.querySelector('.ie-container');
+  data.editing = $currentIndividualEntry;
   for (var i = 0; i < data.entries.length; i++) {
     if (data.entries[i].entryId === editedEntryId) {
+      data.beforeEditing = data.entries[i];
       addFilmToForm(data.entries[i].movie);
       $movieEntryForm.elements.date.value = data.entries[i].date;
       $movieEntryForm.elements.review.value = data.entries[i].review;

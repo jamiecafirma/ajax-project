@@ -17,7 +17,7 @@
 </head>
 <body>
   <div class="user-action-banner white-text text-center font-size-12 justify-center align-flex-end">
-    <p><strong id="banner-movie">All the President's Men</strong> was added to your diary</p>
+    <p><span id="banner-message-p1"></span><strong id="banner-movie">All the President's Men</strong><span id="banner-message-p2"> was added to your diary</span></p>
   </div>
   <div class="nav-bar align-center justify-center">
     <a href="#" class="nav-button" data-view="search-films">
@@ -133,8 +133,8 @@
   <div class="modal hidden" id="edit-delete-modal" data-modal="edit-delete">
     <div class="black-bg bg-blur align-flex-end justify-center">
       <div class="flex-column align-center mb-edit-delete-modal">
-        <p class="white-text font-size-18 font-weight-700">All the President's Men</p>
-        <p class="italic no-mt"><span>Rewatched</span> <span>Sep 19, 2021</span></p>
+        <p id="edit-delete-title" class="white-text font-size-18 font-weight-700 mb-12">All the President's Men</p>
+        <p class="italic no-mt"><span id="edit-delete-rewatch">Rewatched</span> <span id="edit-delete-date">Sep 19, 2021</span></p>
         <a class="text-center orange-text padding-tb-75-rem edit-button border-radius-top button-border" href="#">Delete</a>
         <a id="edit-entry" data-modal="entry-form" class="text-center light-blue-text padding-tb-75-rem edit-button border-radius-bottom" href="#">Edit</a>
         <a id="close-edit-delete" data-modal="edit-delete" class="text-center light-blue-text font-weight-700 padding-one-and-half-rem edit-button border-radius-all mt-10" href="#">Done</a>
@@ -241,41 +241,43 @@
         </div>
       </div>
       <div class="view hidden" data-view="individual-entry" id="individual-entry-view">
-        <div class="grey-bg padding-one-and-half-rem pt-1-5rem" id="">
-          <div class="row">
-            <div class="mobile-width-third">
-              <img id="ie-poster" src="https://m.media-amazon.com/images/M/MV5BOWI2YWQxM2MtY2U4Yi00YjgzLTgwNzktN2ExNTgzNTIzMmUzXkEyXkFqcGdeQXVyMTAwMzUyOTc@._V1_SX300.jpg" alt="movie-poster">
-            </div>
-            <div class="mobile-width-two-thirds flex-column pl-1rem">
-              <div class="row align-center">
-                <p id="ie-title" class="white-text font-weight-700 no-margin">All the President's Men</p>
-                <p id="ie-year" class="light-blue-text font-size-14 no-margin ml-4">1976</p>
+        <div class="ie-container">
+          <div class="grey-bg padding-one-and-half-rem pt-1-5rem" id="">
+            <div class="row">
+              <div class="mobile-width-third">
+                <img id="ie-poster" src="https://m.media-amazon.com/images/M/MV5BOWI2YWQxM2MtY2U4Yi00YjgzLTgwNzktN2ExNTgzNTIzMmUzXkEyXkFqcGdeQXVyMTAwMzUyOTc@._V1_SX300.jpg" alt="movie-poster">
               </div>
-              <div class="row">
-                <p class="grey-text italic"><span id="ie-rewatch">Rewatched</span> <span id="ie-date">Sep 19, 2021</span></p>
-              </div>
-              <div class="row">
-                <div id="ie-rating" class="font-size-20 mr-6">
-                  <i class="fas fa-star rated no-margin hidden" data-index="1"></i>
-                  <i class="fas fa-star rated no-margin hidden" data-index="2"></i>
-                  <i class="fas fa-star rated no-margin hidden" data-index="3"></i>
-                  <i class="fas fa-star rated no-margin hidden" data-index="4"></i>
-                  <i class="fas fa-star rated no-margin hidden" data-index="5"></i>
+              <div class="mobile-width-two-thirds flex-column pl-1rem">
+                <div class="row align-center">
+                  <p id="ie-title" class="white-text font-weight-700 no-margin">All the President's Men</p>
+                  <p id="ie-year" class="light-blue-text font-size-14 no-margin ml-4">1976</p>
                 </div>
-                <div class="font-size-20">
-                  <i id="ie-like" class="fas fa-heart liked hidden"></i>
+                <div class="row">
+                  <p class="grey-text italic"><span id="ie-rewatch">Rewatched</span> <span id="ie-date">Sep 19, 2021</span></p>
+                </div>
+                <div class="row">
+                  <div id="ie-rating" class="font-size-20 mr-6">
+                    <i class="fas fa-star rated no-margin hidden" data-index="1"></i>
+                    <i class="fas fa-star rated no-margin hidden" data-index="2"></i>
+                    <i class="fas fa-star rated no-margin hidden" data-index="3"></i>
+                    <i class="fas fa-star rated no-margin hidden" data-index="4"></i>
+                    <i class="fas fa-star rated no-margin hidden" data-index="5"></i>
+                  </div>
+                  <div class="font-size-20">
+                    <i id="ie-like" class="fas fa-heart liked hidden"></i>
+                  </div>
                 </div>
               </div>
+              <div class="row column-two-thirds">
+                <p id="ie-review" class="grey-text font-size-14 line-height-two">I love the scene where they eat at McDonalds at 3 in the morning</p>
+              </div>
             </div>
-            <div class="row column-two-thirds">
-              <p id="ie-review" class="grey-text font-size-14 line-height-two">I love the scene where they eat at McDonalds at 3 in the morning</p>
-            </div>
+          </div>
+          <div class="grey-bg mb-70 row justify-space-between padding-one-and-half-rem" id="entry-to-search-link">
+              <a href="#" class="light-blue-text font-size-18">Go to film</a>
+              <i class="fas fa-chevron-right font-size-20 dark-grey-text"></i>
           </div>
         </div>
-        <div class="grey-bg mb-70 row justify-space-between padding-one-and-half-rem" id="entry-to-search-link">
-            <a href="#" class="light-blue-text font-size-18">Go to film</a>
-            <i class="fas fa-chevron-right font-size-20 dark-grey-text"></i>
-          </div>
       </div>
     </div>
   </main>

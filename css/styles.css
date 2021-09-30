@@ -393,6 +393,10 @@ textarea::placeholder {
   margin-bottom: 70px;
 }
 
+.mb-12 {
+  margin-bottom: 12px;
+}
+
 .month-header {
   background-color: #282f38;
   padding: 0 1.5rem;
