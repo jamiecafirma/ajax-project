@@ -439,6 +439,12 @@ textarea::placeholder {
   margin-left: 4px;
 }
 
+.rewatch-section {
+  margin-top: 50px;
+  margin-bottom: 30px;
+  border-top: solid #1b232c 0.1px;
+}
+
 .border-radius-2 {
   border-radius: 2px;
 }
