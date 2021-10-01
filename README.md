@@ -1,3 +1,3 @@
 # ticket-stubs
 
-A dynamic HTML, CSS, and JavaScript solo project.
+A web application for movie lovers who want to keep track of the films they watch.
