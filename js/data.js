@@ -5,7 +5,7 @@ var data = {
     open: false,
     current: 'imdb'
   },
-  view: 'search-film',
+  view: 'search-films',
   lastSearch: {},
   lastDiaryEntry: null,
   editing: null,
