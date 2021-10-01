@@ -30,10 +30,15 @@ button {
   color: white;
   border: none;
   font-size: 16px;
+  cursor: pointer;
 }
 
 a {
   text-decoration: none;
+}
+
+.search-button:hover {
+  color: #00e053;
 }
 
 .dark-grey-border {
@@ -176,6 +181,10 @@ a {
 .question-mark {
   padding-top: 4px;
   margin-left: 8px;
+}
+
+.question-mark:hover {
+  color: #ff8f0d;
 }
 
 .close-button {
