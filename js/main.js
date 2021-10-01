@@ -316,9 +316,9 @@ function searchTitle(event) {
   var searchYear = $titleForm.year.value;
 
   if (searchYear !== '') {
-    xhr.open('GET', 'http://www.omdbapi.com/?t=' + searchTitle + '&' + 'y=' + searchYear + '&' + 'plot=full' + '&' + apikey);
+    xhr.open('GET', 'https://www.omdbapi.com/?t=' + searchTitle + '&' + 'y=' + searchYear + '&' + 'plot=full' + '&' + apikey);
   } else {
-    xhr.open('GET', 'http://www.omdbapi.com/?t=' + searchTitle + '&' + 'plot=full' + '&' + apikey);
+    xhr.open('GET', 'https://www.omdbapi.com/?t=' + searchTitle + '&' + 'plot=full' + '&' + apikey);
   }
   xhr.responseType = 'json';
 
@@ -338,7 +338,7 @@ function searchID(event) {
   var xhr = new XMLHttpRequest();
   var searchID = $idForm.imdbID.value;
 
-  xhr.open('GET', 'http://www.omdbapi.com/?i=' + searchID + '&' + apikey);
+  xhr.open('GET', 'https://www.omdbapi.com/?i=' + searchID + '&' + apikey);
   xhr.responseType = 'json';
 
   function returnIdSearch(event) {
