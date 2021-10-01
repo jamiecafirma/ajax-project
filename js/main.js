@@ -493,6 +493,14 @@ function hideBanner() {
   $userActionBanner.className = 'user-action-banner white-text text-center font-size-12 justify-center align-flex-end';
 }
 
+if (data.view === 'diary' || data.view === 'individual-entry') {
+  $navSearch.className = 'fas fa-search nav-item';
+  $navDiary.className = 'fas fa-ticket-alt nav-item blue-text';
+} else if (data.view === 'search-films' || data.view === 'search-result') {
+  $navSearch.className = 'fas fa-search nav-item blue-text';
+  $navDiary.className = 'fas fa-ticket-alt nav-item';
+}
+
 function navToSwitchViews(event) {
   if (event.target.tagName !== 'I' && event.target.tagName !== 'A') {
     return;
@@ -506,14 +514,6 @@ function navToSwitchViews(event) {
   } else {
     changeView('diary');
   }
-  if (data.view === 'diary') {
-    $navSearch.className = 'fas fa-search nav-item';
-    $navDiary.className = 'fas fa-ticket-alt nav-item blue-text';
-  } else {
-    $navSearch.className = 'fas fa-search nav-item blue-text';
-    $navDiary.className = 'fas fa-ticket-alt nav-item';
-  }
-
 }
 
 $navBar.addEventListener('click', navToSwitchViews);
