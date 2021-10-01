@@ -37,6 +37,7 @@ if (data.view === 'search-result') {
 } else {
   changeView(data.view);
 }
+showViewOnNav();
 
 function toggleModals(targetModal) {
   for (var i = 0; i < $modals.length; i++) {
@@ -493,6 +494,16 @@ function hideBanner() {
   $userActionBanner.className = 'user-action-banner white-text text-center font-size-12 justify-center align-flex-end';
 }
 
+function showViewOnNav() {
+  if (data.view === 'diary' || data.view === 'individual-entry') {
+    $navSearch.className = 'fas fa-search nav-item';
+    $navDiary.className = 'fas fa-ticket-alt nav-item blue-text';
+  } else {
+    $navSearch.className = 'fas fa-search nav-item blue-text';
+    $navDiary.className = 'fas fa-ticket-alt nav-item';
+  }
+}
+
 function navToSwitchViews(event) {
   if (event.target.tagName !== 'I' && event.target.tagName !== 'A') {
     return;
@@ -506,14 +517,7 @@ function navToSwitchViews(event) {
   } else {
     changeView('diary');
   }
-  if (data.view === 'diary') {
-    $navSearch.className = 'fas fa-search nav-item';
-    $navDiary.className = 'fas fa-ticket-alt nav-item blue-text';
-  } else {
-    $navSearch.className = 'fas fa-search nav-item blue-text';
-    $navDiary.className = 'fas fa-ticket-alt nav-item';
-  }
-
+  showViewOnNav();
 }
 
 $navBar.addEventListener('click', navToSwitchViews);

@@ -3,11 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AJAX Project</title>
+  <meta property="og:title" content="Ticket Stubs">
+  <meta property="og:description" content="A web application for movie lovers who want to keep track of the films they watch.">
+  <meta property="og:image" content="images/ticket-stubs-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:url" content="https://jamiecafirma.github.io/ticket-stubs/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:site_name" content="Ticket Stubs">
+  <meta name="twitter:image:alt" content="Search for a film">
+  <title>Ticket Stubs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -116,16 +127,14 @@
           name="review"
           id="entry-review"
           class="padding-tb-75-rem"
-          placeholder="Add review... or anything you want to say, go crazy ;)"></textarea>
+          placeholder="Add review... or anything you want to say..."></textarea>
         </div>
-        <hr class="dark-grey-border">
-        <div class="row padding-sides-one-rem padding-tb-50-rem">
-          <a href="#" data-modal="tags" id="tags-link" class="grey-text">Add tags...</a>
-        </div>
-        <hr class="dark-grey-border remove-margin-left">
-        <div class="row padding-tb-75-rem flex-column align-center pt-1-5rem grey-text" id="rewatch-container">
-          <i class="fas fa-history"></i>
-          <p class="font-size-12">I've seen this film before</p>
+        <div class="rewatch-section flex-column mb-30">
+          <hr class="dark-grey-border remove-margin-left">
+          <div class="row padding-tb-75-rem flex-column align-center pt-1-5rem grey-text" id="rewatch-container">
+            <i class="fas fa-history"></i>
+            <p class="font-size-12">I've seen this film before</p>
+          </div>
         </div>
       </form>
     </div>
