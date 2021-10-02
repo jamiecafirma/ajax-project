@@ -41,6 +41,10 @@ a {
   color: #00e053;
 }
 
+.pen-icon:hover {
+  color: #00e053;
+}
+
 .dark-grey-border {
   border-bottom: solid #1b232c 0.1px;
   border-top: none;
@@ -283,6 +287,11 @@ a {
   color: #b8cadb;
   margin: 1rem 0.5rem 0 0;
   padding: 10px 12px 0;
+}
+
+.imdb-link:hover {
+  border-color: #ff8f0d;
+  color: #ff8f0d;
 }
 
 .runtime {

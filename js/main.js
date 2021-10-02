@@ -753,6 +753,7 @@ function createIndividualEntry(entryId) {
   function ieToSearchResult(movie) {
     renderSearchResult(movie);
     changeView('search-result');
+    data.lastSearch = movie;
   }
 
   for (var i = 0; i < data.entries.length; i++) {
