@@ -473,6 +473,7 @@ function saveEntry(event) {
   }
   toggleModals('entry-form');
   setTimeout(hideBanner, 3000);
+  updateDiaryEntries();
 }
 
 $movieEntryForm.addEventListener('submit', saveEntry);
@@ -738,7 +739,25 @@ function addEntryToMonth(entry) {
   return $monthContainer;
 }
 
-function loadDiaryEntries(event) {
+function sortEntriesByWatchDate(entries) {
+  var newestFirst = entries;
+  newestFirst.sort(function (a, b) {
+    return b.sorting - a.sorting;
+  });
+  return newestFirst;
+}
+
+data.sortedEntries = sortEntriesByWatchDate(data.entries);
+
+function updateDiaryEntries() {
+  while ($diaryContainer.firstElementChild !== null) {
+    $diaryContainer.removeChild($diaryContainer.firstElementChild);
+  }
+  data.sortedEntries = sortEntriesByWatchDate(data.entries);
+  loadDiaryEntries();
+}
+
+function loadDiaryEntries() {
   for (var i = 0; i < data.sortedEntries.length; i++) {
     var entryMonth = addEntryToMonth(renderDiary(data.sortedEntries[i]));
     var entryYear = addMonthToYear(entryMonth);
@@ -746,7 +765,11 @@ function loadDiaryEntries(event) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', loadDiaryEntries);
+function firstDiaryLoad(event) {
+  loadDiaryEntries();
+}
+
+document.addEventListener('DOMContentLoaded', firstDiaryLoad);
 
 function createIndividualEntry(entryId) {
 
@@ -874,16 +897,7 @@ function deleteDiaryEntry(event) {
   for (var i = 0; i < data.entries.length; i++) {
     if (data.entries[i].entryId === data.lastDiaryEntry) {
       data.entries.splice(i, 1);
-      var $entryBlocks = document.querySelectorAll('.entry-block');
-      for (var e = 0; e < $entryBlocks.length; e++) {
-        if (parseInt($entryBlocks[e].getAttribute('data-entry-id')) === data.lastDiaryEntry) {
-          if ($entryBlocks[e].closest('.month').children.length === 2) {
-            $entryBlocks[e].closest('.month').remove();
-          } else {
-            $entryBlocks[e].remove();
-          }
-        }
-      }
+      updateDiaryEntries();
       toggleModals('delete-entry');
       changeView('diary');
     }
