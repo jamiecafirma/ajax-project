@@ -84,11 +84,7 @@ function closeEntryModal(event) {
         }
       }
     }
-    for (var s = 0; s < $stars.length; s++) {
-      $stars[s].className = 'fas fa-star form-star';
-    }
-    $heart.className = 'fas fa-heart';
-    $rewatchContainer.className = 'row padding-tb-75-rem flex-column align-center pt-1-5rem grey-text';
+    resetEntryForm();
   }
   toggleModals('entry-form');
 }
@@ -96,7 +92,6 @@ function closeEntryModal(event) {
 $closeEntryForm.addEventListener('click', closeEntryModal);
 
 function createSearchResult(response) {
-  resetEntryForm();
   var output = {};
 
   output.title = response.Title;
@@ -429,6 +424,11 @@ function resetEntryForm() {
   data.currentEntry.review = '';
   data.currentEntry.date = '';
   data.currentEntry.movie = {};
+  for (var s = 0; s < $stars.length; s++) {
+    $stars[s].className = 'fas fa-star form-star';
+  }
+  $heart.className = 'fas fa-heart';
+  $rewatchContainer.className = 'row padding-tb-75-rem flex-column align-center pt-1-5rem grey-text';
 }
 
 function formatDate(date, entry) {
@@ -463,14 +463,30 @@ function saveEntry(event) {
       }
     }
   } else {
-    data.currentEntry.date = $movieEntryForm.elements.date.value;
-    formatDate(data.currentEntry.date, data.currentEntry);
-    data.currentEntry.review = $movieEntryForm.elements.review.value;
-    data.currentEntry.entryId = data.nextEntryId;
+    var formData = {};
+    formData.movie = {};
+    formData.formattedDate = {};
+    formData.movie.cast = data.currentEntry.movie.cast;
+    formData.movie.director = data.currentEntry.movie.director;
+    formData.movie.imdbID = data.currentEntry.movie.imdbID;
+    formData.movie.plot = data.currentEntry.movie.plot;
+    formData.movie.poster = data.currentEntry.movie.poster;
+    formData.movie.runtime = data.currentEntry.movie.runtime;
+    formData.movie.title = data.currentEntry.movie.title;
+    formData.movie.writer = data.currentEntry.movie.writer;
+    formData.movie.year = data.currentEntry.movie.year;
+    formData.date = $movieEntryForm.elements.date.value;
+    formatDate(formData.date, formData);
+    formData.rating = data.currentEntry.rating;
+    formData.liked = data.currentEntry.liked;
+    formData.rewatched = data.currentEntry.rewatched;
+    formData.review = $movieEntryForm.elements.review.value;
+    formData.entryId = data.nextEntryId;
     data.nextEntryId++;
-    data.entries.push(data.currentEntry);
-    showBanner(data.currentEntry, false);
+    data.entries.push(formData);
+    showBanner(formData, false);
   }
+  resetEntryForm();
   toggleModals('entry-form');
   setTimeout(hideBanner, 3000);
   updateDiaryEntries();
