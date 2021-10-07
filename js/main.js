@@ -881,6 +881,9 @@ function showEditEntry(event) {
       addFilmToForm(data.entries[i].movie);
       $movieEntryForm.elements.date.value = data.entries[i].date;
       $movieEntryForm.elements.review.value = data.entries[i].review;
+      data.currentEntry.rating = data.entries[i].rating;
+      data.currentEntry.liked = data.entries[i].liked;
+      data.currentEntry.rewatched = data.entries[i].rewatched;
       for (var currentStar = 0; currentStar < data.entries[i].rating; currentStar++) {
         $starsContainer.children[currentStar].className = 'fas fa-star form-star rated';
       }
