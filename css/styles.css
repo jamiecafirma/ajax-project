@@ -538,3 +538,8 @@ textarea::placeholder {
 .button-border {
   border-bottom: solid #242b34 1px;
 }
+
+.edit-icon-style {
+  width: 40px;
+  text-align: right;
+}
