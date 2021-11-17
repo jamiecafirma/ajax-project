@@ -311,6 +311,33 @@ function searchTitle(event) {
   var searchTitle = $titleForm.title.value;
   var searchYear = $titleForm.year.value;
 
+  function showLoading(event) {
+    var $searchResultView = document.querySelector('#search-result-view');
+    if ($searchResultView.firstElementChild !== null) {
+      $searchResultView.removeChild($searchResultView.firstElementChild);
+    }
+    var $spinnerContainer = document.createElement('div');
+    $spinnerContainer.className = 'justify-center align-center full-height';
+    $searchResultView.appendChild($spinnerContainer);
+
+    var $loadingSpinner = document.createElement('div');
+    $loadingSpinner.className = 'lds-facebook';
+    $spinnerContainer.appendChild($loadingSpinner);
+
+    var $loadingBar1 = document.createElement('div');
+    $loadingSpinner.appendChild($loadingBar1);
+
+    var $loadingBar2 = document.createElement('div');
+    $loadingSpinner.appendChild($loadingBar2);
+
+    var $loadingBar3 = document.createElement('div');
+    $loadingSpinner.appendChild($loadingBar3);
+
+    changeView('search-result');
+  }
+
+  xhr.addEventListener('loadstart', showLoading);
+
   if (searchYear !== '') {
     xhr.open('GET', 'https://www.omdbapi.com/?t=' + searchTitle + '&' + 'y=' + searchYear + '&' + 'plot=full' + '&' + apikey);
   } else {
