@@ -130,11 +130,6 @@ a {
   padding-right: 1rem;
 }
 
-.padding-tb-50-rem {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
 .padding-tb-75-rem {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -203,10 +198,6 @@ a {
   padding: 3rem 2rem 1rem;
 }
 
-.pt-3rem {
-  padding-top: 3rem;
-}
-
 .pt-1-5rem {
   padding-top: 1.5rem;
 }
@@ -237,10 +228,6 @@ a {
 
 .italic {
   font-style: italic;
-}
-
-.text-right {
-  text-align: right;
 }
 
 .film-info-header {
@@ -461,10 +448,6 @@ textarea::placeholder {
   margin-top: 50px;
   margin-bottom: 30px;
   border-top: solid #1b232c 0.1px;
-}
-
-.border-radius-2 {
-  border-radius: 2px;
 }
 
 .entry-pic {
