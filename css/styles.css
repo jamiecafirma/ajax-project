@@ -582,6 +582,11 @@ textarea::placeholder {
   height: 100vh;
 }
 
+.search-again:hover {
+  color: #3fbcf4;
+  cursor: pointer;
+}
+
 @keyframes lds-facebook {
   0% {
     top: 8px;
