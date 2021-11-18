@@ -43,13 +43,3 @@ function addLocalStorage(event) {
 }
 
 window.addEventListener('beforeunload', addLocalStorage);
-
-function sortEntriesByWatchDate(entries) {
-  var newestFirst = entries;
-  newestFirst.sort(function (a, b) {
-    return b.sorting - a.sorting;
-  });
-  return newestFirst;
-}
-
-data.sortedEntries = sortEntriesByWatchDate(data.entries);

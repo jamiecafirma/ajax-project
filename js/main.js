@@ -84,11 +84,7 @@ function closeEntryModal(event) {
         }
       }
     }
-    for (var s = 0; s < $stars.length; s++) {
-      $stars[s].className = 'fas fa-star form-star';
-    }
-    $heart.className = 'fas fa-heart';
-    $rewatchContainer.className = 'row padding-tb-75-rem flex-column align-center pt-1-5rem grey-text';
+    resetEntryForm();
   }
   toggleModals('entry-form');
 }
@@ -96,7 +92,6 @@ function closeEntryModal(event) {
 $closeEntryForm.addEventListener('click', closeEntryModal);
 
 function createSearchResult(response) {
-  resetEntryForm();
   var output = {};
 
   output.title = response.Title;
@@ -173,6 +168,24 @@ function renderSearchResult(movie) {
   var $searchResultView = document.querySelector('#search-result-view');
   if ($searchResultView.firstElementChild !== null) {
     $searchResultView.removeChild($searchResultView.firstElementChild);
+  }
+  if (!movie.title) {
+    var $noResultsContainer = document.createElement('div');
+    $noResultsContainer.className = 'justify-center align-center full-height flex-column';
+    $searchResultView.appendChild($noResultsContainer);
+
+    var $noResultsMessage = document.createElement('p');
+    $noResultsMessage.className = 'font-size-20 white-text';
+    $noResultsMessage.textContent = 'No Results';
+    $noResultsContainer.appendChild($noResultsMessage);
+
+    var $searchAgainMessage = document.createElement('a');
+    $searchAgainMessage.className = 'font-size-18 search-again';
+    $searchAgainMessage.textContent = 'Try Searching Again?';
+    $searchAgainMessage.addEventListener('click', function () {
+      changeView('search-films');
+    });
+    $noResultsContainer.appendChild($searchAgainMessage);
   }
 
   var $movieOverview = document.createElement('div');
@@ -310,11 +323,76 @@ function renderSearchResult(movie) {
   $writersContainer.appendChild($writersList);
 }
 
+function showLoading(event) {
+  var $searchResultView = document.querySelector('#search-result-view');
+  if ($searchResultView.firstElementChild !== null) {
+    $searchResultView.removeChild($searchResultView.firstElementChild);
+  }
+  var $spinnerContainer = document.createElement('div');
+  $spinnerContainer.className = 'justify-center align-center full-height';
+  $searchResultView.appendChild($spinnerContainer);
+
+  var $loadingSpinner = document.createElement('div');
+  $loadingSpinner.className = 'lds-facebook';
+  $spinnerContainer.appendChild($loadingSpinner);
+
+  var $loadingBar1 = document.createElement('div');
+  $loadingSpinner.appendChild($loadingBar1);
+
+  var $loadingBar2 = document.createElement('div');
+  $loadingSpinner.appendChild($loadingBar2);
+
+  var $loadingBar3 = document.createElement('div');
+  $loadingSpinner.appendChild($loadingBar3);
+
+  changeView('search-result');
+}
+
+function showNoResults() {
+  var $searchResultView = document.querySelector('#search-result-view');
+  if ($searchResultView.firstElementChild !== null) {
+    $searchResultView.removeChild($searchResultView.firstElementChild);
+  }
+  var $noResultsContainer = document.createElement('div');
+  $noResultsContainer.className = 'justify-center align-center full-height flex-column';
+  $searchResultView.appendChild($noResultsContainer);
+
+  var $noResultsMessage = document.createElement('p');
+  $noResultsMessage.className = 'font-size-20 white-text';
+  $noResultsMessage.textContent = 'No Results';
+  $noResultsContainer.appendChild($noResultsMessage);
+
+  var $searchAgainMessage = document.createElement('a');
+  $searchAgainMessage.className = 'font-size-18 search-again';
+  $searchAgainMessage.textContent = 'Try Searching Again?';
+  $searchAgainMessage.addEventListener('click', function () {
+    changeView('search-films');
+  });
+  $noResultsContainer.appendChild($searchAgainMessage);
+}
+
+function showNetworkError() {
+  var $searchResultView = document.querySelector('#search-result-view');
+  if ($searchResultView.firstElementChild !== null) {
+    $searchResultView.removeChild($searchResultView.firstElementChild);
+  }
+  var $errorContainer = document.createElement('div');
+  $errorContainer.className = 'justify-center full-height';
+  $searchResultView.appendChild($errorContainer);
+
+  var $errorMessage = document.createElement('p');
+  $errorMessage.className = 'font-size-20 white-text error-message-style text-center';
+  $errorMessage.textContent = 'Sorry, there was an error connecting to the network! Please check your internet connection.';
+  $errorContainer.appendChild($errorMessage);
+}
+
 function searchTitle(event) {
   event.preventDefault();
   var xhr = new XMLHttpRequest();
   var searchTitle = $titleForm.title.value;
   var searchYear = $titleForm.year.value;
+
+  xhr.addEventListener('loadstart', showLoading);
 
   if (searchYear !== '') {
     xhr.open('GET', 'https://www.omdbapi.com/?t=' + searchTitle + '&' + 'y=' + searchYear + '&' + 'plot=full' + '&' + apikey);
@@ -324,10 +402,16 @@ function searchTitle(event) {
   xhr.responseType = 'json';
 
   function returnTitleSearch(event) {
-    createSearchResult(xhr.response);
+    var searchResult = xhr.response;
+    if (searchResult.Response === 'False') {
+      showNoResults();
+    } else {
+      createSearchResult(searchResult);
+    }
     $titleForm.reset();
   }
 
+  xhr.addEventListener('error', showNetworkError);
   xhr.addEventListener('load', returnTitleSearch);
   xhr.send();
 }
@@ -429,6 +513,11 @@ function resetEntryForm() {
   data.currentEntry.review = '';
   data.currentEntry.date = '';
   data.currentEntry.movie = {};
+  for (var s = 0; s < $stars.length; s++) {
+    $stars[s].className = 'fas fa-star form-star';
+  }
+  $heart.className = 'fas fa-heart';
+  $rewatchContainer.className = 'row padding-tb-75-rem flex-column align-center pt-1-5rem grey-text';
 }
 
 function formatDate(date, entry) {
@@ -463,16 +552,33 @@ function saveEntry(event) {
       }
     }
   } else {
-    data.currentEntry.date = $movieEntryForm.elements.date.value;
-    formatDate(data.currentEntry.date, data.currentEntry);
-    data.currentEntry.review = $movieEntryForm.elements.review.value;
-    data.currentEntry.entryId = data.nextEntryId;
+    var formData = {};
+    formData.movie = {};
+    formData.formattedDate = {};
+    formData.movie.cast = data.currentEntry.movie.cast;
+    formData.movie.director = data.currentEntry.movie.director;
+    formData.movie.imdbID = data.currentEntry.movie.imdbID;
+    formData.movie.plot = data.currentEntry.movie.plot;
+    formData.movie.poster = data.currentEntry.movie.poster;
+    formData.movie.runtime = data.currentEntry.movie.runtime;
+    formData.movie.title = data.currentEntry.movie.title;
+    formData.movie.writer = data.currentEntry.movie.writer;
+    formData.movie.year = data.currentEntry.movie.year;
+    formData.date = $movieEntryForm.elements.date.value;
+    formatDate(formData.date, formData);
+    formData.rating = data.currentEntry.rating;
+    formData.liked = data.currentEntry.liked;
+    formData.rewatched = data.currentEntry.rewatched;
+    formData.review = $movieEntryForm.elements.review.value;
+    formData.entryId = data.nextEntryId;
     data.nextEntryId++;
-    data.entries.push(data.currentEntry);
-    showBanner(data.currentEntry, false);
+    data.entries.push(formData);
+    showBanner(formData, false);
   }
+  resetEntryForm();
   toggleModals('entry-form');
   setTimeout(hideBanner, 3000);
+  updateDiaryEntries();
 }
 
 $movieEntryForm.addEventListener('submit', saveEntry);
@@ -738,7 +844,25 @@ function addEntryToMonth(entry) {
   return $monthContainer;
 }
 
-function loadDiaryEntries(event) {
+function sortEntriesByWatchDate(entries) {
+  var newestFirst = entries;
+  newestFirst.sort(function (a, b) {
+    return b.sorting - a.sorting;
+  });
+  return newestFirst;
+}
+
+data.sortedEntries = sortEntriesByWatchDate(data.entries);
+
+function updateDiaryEntries() {
+  while ($diaryContainer.firstElementChild !== null) {
+    $diaryContainer.removeChild($diaryContainer.firstElementChild);
+  }
+  data.sortedEntries = sortEntriesByWatchDate(data.entries);
+  loadDiaryEntries();
+}
+
+function loadDiaryEntries() {
   for (var i = 0; i < data.sortedEntries.length; i++) {
     var entryMonth = addEntryToMonth(renderDiary(data.sortedEntries[i]));
     var entryYear = addMonthToYear(entryMonth);
@@ -746,13 +870,18 @@ function loadDiaryEntries(event) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', loadDiaryEntries);
+function firstDiaryLoad(event) {
+  loadDiaryEntries();
+}
+
+document.addEventListener('DOMContentLoaded', firstDiaryLoad);
 
 function createIndividualEntry(entryId) {
 
   function ieToSearchResult(movie) {
     renderSearchResult(movie);
     changeView('search-result');
+    data.lastSearch = movie;
   }
 
   for (var i = 0; i < data.entries.length; i++) {
@@ -841,6 +970,9 @@ function showEditEntry(event) {
       addFilmToForm(data.entries[i].movie);
       $movieEntryForm.elements.date.value = data.entries[i].date;
       $movieEntryForm.elements.review.value = data.entries[i].review;
+      data.currentEntry.rating = data.entries[i].rating;
+      data.currentEntry.liked = data.entries[i].liked;
+      data.currentEntry.rewatched = data.entries[i].rewatched;
       for (var currentStar = 0; currentStar < data.entries[i].rating; currentStar++) {
         $starsContainer.children[currentStar].className = 'fas fa-star form-star rated';
       }
@@ -873,16 +1005,7 @@ function deleteDiaryEntry(event) {
   for (var i = 0; i < data.entries.length; i++) {
     if (data.entries[i].entryId === data.lastDiaryEntry) {
       data.entries.splice(i, 1);
-      var $entryBlocks = document.querySelectorAll('.entry-block');
-      for (var e = 0; e < $entryBlocks.length; e++) {
-        if (parseInt($entryBlocks[e].getAttribute('data-entry-id')) === data.lastDiaryEntry) {
-          if ($entryBlocks[e].closest('.month').children.length === 2) {
-            $entryBlocks[e].closest('.month').remove();
-          } else {
-            $entryBlocks[e].remove();
-          }
-        }
-      }
+      updateDiaryEntries();
       toggleModals('delete-entry');
       changeView('diary');
     }
