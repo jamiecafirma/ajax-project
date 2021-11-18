@@ -12,7 +12,7 @@ I watch a lot of movies, and it can be hard to keep track of what I watched, wha
 
 ## Live Demo
 
-Try the application live at [jamiecafirma.github.io/ticket-stubs/](jamiecafirma.github.io/ticket-stubs/)
+Try the application live at [https://jamiecafirma.github.io/ticket-stubs/](https://jamiecafirma.github.io/ticket-stubs/)
 
 ## Features
 
