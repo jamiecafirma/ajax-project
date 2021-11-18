@@ -14,8 +14,7 @@
 
 .column-full,
 .column-half,
-.column-two-thirds,
-.column-third {
+.column-two-thirds {
   width: 100%;
 }
 
@@ -97,10 +96,6 @@ img {
 
   .column-two-thirds {
     width: calc(200% / 3);
-  }
-
-  .column-third {
-    width: calc(100% / 3);
   }
 
   .imdb-modal-header {
