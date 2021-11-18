@@ -371,6 +371,21 @@ function showNoResults() {
   $noResultsContainer.appendChild($searchAgainMessage);
 }
 
+function showNetworkError() {
+  var $searchResultView = document.querySelector('#search-result-view');
+  if ($searchResultView.firstElementChild !== null) {
+    $searchResultView.removeChild($searchResultView.firstElementChild);
+  }
+  var $errorContainer = document.createElement('div');
+  $errorContainer.className = 'justify-center full-height';
+  $searchResultView.appendChild($errorContainer);
+
+  var $errorMessage = document.createElement('p');
+  $errorMessage.className = 'font-size-20 white-text error-message-style text-center';
+  $errorMessage.textContent = 'Sorry, there was an error connecting to the network! Please check your internet connection.';
+  $errorContainer.appendChild($errorMessage);
+}
+
 function searchTitle(event) {
   event.preventDefault();
   var xhr = new XMLHttpRequest();
@@ -396,6 +411,7 @@ function searchTitle(event) {
     $titleForm.reset();
   }
 
+  xhr.addEventListener('error', showNetworkError);
   xhr.addEventListener('load', returnTitleSearch);
   xhr.send();
 }

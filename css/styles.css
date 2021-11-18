@@ -587,6 +587,11 @@ textarea::placeholder {
   cursor: pointer;
 }
 
+.error-message-style {
+  padding: 150px 20%;
+  line-height: 1.5;
+}
+
 @keyframes lds-facebook {
   0% {
     top: 8px;
